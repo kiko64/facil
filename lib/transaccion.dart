@@ -15,9 +15,9 @@ import 'librerias/servicioEjecutar.dart';
 import 'auxiliares.dart';
 import 'actividades.dart';
 import 'registros.dart';
-import 'items.dart';
+import 'productos.dart';
 import 'cuentas.dart';
-
+import 'package:facilapp/pos/presentation/home/home_page.dart';
 
 class MyTransaccion extends StatelessWidget {
 
@@ -210,7 +210,7 @@ class _VoiceHomeState extends State<VoiceHome> {
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
         color: Colors.teal,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(6.0),
       ),
       padding: EdgeInsets.symmetric(
         vertical: 6.0,
@@ -230,8 +230,8 @@ class _VoiceHomeState extends State<VoiceHome> {
 
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(4.0),
+        color: Colors.white,                                                    // grey.shade300
+        borderRadius: BorderRadius.circular(6.0),
       ),
       padding: EdgeInsets.symmetric(
 //        vertical: 6.0,
@@ -258,7 +258,7 @@ class _VoiceHomeState extends State<VoiceHome> {
 
         width: MediaQuery.of(context).size.width * 0.93,
         decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(4.0),
         ),
         padding: EdgeInsets.symmetric(
@@ -287,7 +287,7 @@ class _VoiceHomeState extends State<VoiceHome> {
 
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(4.0),
         ),
       padding: EdgeInsets.symmetric(
@@ -326,7 +326,7 @@ class _VoiceHomeState extends State<VoiceHome> {
 
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(4.0),
         ),
       padding: EdgeInsets.symmetric(
@@ -365,7 +365,7 @@ class _VoiceHomeState extends State<VoiceHome> {
 
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(4.0),
         ),
       padding: EdgeInsets.symmetric(
@@ -404,7 +404,7 @@ class _VoiceHomeState extends State<VoiceHome> {
 
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(4.0),
       ),
       padding: EdgeInsets.symmetric(
@@ -477,7 +477,7 @@ class _VoiceHomeState extends State<VoiceHome> {
     Widget widgetFotos = Container (
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(4.0),
         ),
 
@@ -487,7 +487,7 @@ class _VoiceHomeState extends State<VoiceHome> {
         },
 
         textColor: Colors.black,
-        color: Colors.grey.shade300,
+        color: Colors.white,
         splashColor: Colors.black,
 
         child: Column(
@@ -521,7 +521,7 @@ class _VoiceHomeState extends State<VoiceHome> {
     Widget widgetGaleria = Container (
         width: MediaQuery.of(context).size.width * 0.93,
         decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(4.0),
           ),
       padding: EdgeInsets.all(8.0),
@@ -664,10 +664,10 @@ class _VoiceHomeState extends State<VoiceHome> {
                     else sentencia = "'', '', '', ''" ;
 
                     sentencia =
-                        "insert into g_ejecutar ( ejecutar, fecha, usuario, seguimiento, agenda, documento, cuenta, valor, observacion, registro, archivo0, archivo1, archivo2, archivo3 ) "+
+                        "insert into g_ejecutar ( ejecutar, fecha, usuario, seguimiento, agenda, documento, cuenta, valor, observacion, registro, mascara, archivo0, archivo1, archivo2, archivo3 ) "+
                         "values ( 0, now(), 'Ocobo', 12602, " + globals.actividadSaved.toString() + ', ' +
                         globals.auxiliarSaved.toString() + ", " + globals.cuentaSaved.toString() +", " + _valor.text.replaceAll( "," , "" ) +
-                        ", '" + _observacion.text + "', 0, " + sentencia + ")" ;
+                        ", '" + _observacion.text + "', 0, 0, " + sentencia + ")" ;
 
                     print('eecutar(->): ${sentencia}');
                     sentencia = await Buscar.ejecutar( sentencia );             // Ingresar a g_ejecutar
@@ -750,14 +750,15 @@ class MenuLateral extends StatelessWidget{
 
           new ListTile(
             leading: Icon(Icons.local_grocery_store),
-            title: Text("Carrito de compras"),
+            title: Text("Compras"),
             onTap: () async {
 
-              String _items = await Buscar.averiguarActividades( "todos,0,todos" );// Viene el json como un String
+              String _items = await Buscar.averiguarProductos();                // Viene el json como un String
               print('llamar: ${_items}');
               var route = MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    MyItemPage( value: _items ),                                // Cambio
+//                    MyProductoPage( value: _items ),                            // Cambio
+                  HomePage(),
                 );
               Navigator.of(context).push(route);
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app.dart';
+import 'package:facilapp/pos/dependencies_provider.dart' as di;
 
 final ThemeData kIOSTheme = new ThemeData(
 
@@ -13,7 +14,7 @@ final ThemeData kIOSTheme = new ThemeData(
 
 final ThemeData kDefaultTheme = new ThemeData(
 
-  primarySwatch: Colors.teal,                                             // Color de sombra
+  primarySwatch: Colors.teal,                                                   // Color de sombra
   primaryColor: Colors.teal,
 
 //        primaryColorBrightness: Brightness.light,
@@ -23,7 +24,7 @@ final ThemeData kDefaultTheme = new ThemeData(
 
   primaryTextTheme: TextTheme(
       title: TextStyle(
-          color: Colors.white                                             // Cambiar globalmente el color del titulo
+          color: Colors.white                                                   // Cambiar globalmente el color del titulo
           )
       ),
   );
@@ -40,6 +41,7 @@ void main() {
 )
       );
 
+      di.init();
 
       runApp(facilApp());
 
