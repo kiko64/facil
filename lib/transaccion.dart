@@ -259,7 +259,7 @@ class _VoiceHomeState extends State<VoiceHome> {
         width: MediaQuery.of(context).size.width * 0.93,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(4.0),
+          borderRadius: BorderRadius.circular(6.0),
         ),
         padding: EdgeInsets.symmetric(
 //          vertical: 6.0,
@@ -288,7 +288,7 @@ class _VoiceHomeState extends State<VoiceHome> {
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(6.0),
         ),
       padding: EdgeInsets.symmetric(
         horizontal: 6.0,
@@ -327,7 +327,7 @@ class _VoiceHomeState extends State<VoiceHome> {
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(6.0),
         ),
       padding: EdgeInsets.symmetric(
         horizontal: 6.0,
@@ -366,7 +366,7 @@ class _VoiceHomeState extends State<VoiceHome> {
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(6.0),
         ),
       padding: EdgeInsets.symmetric(
         horizontal: 6.0,
@@ -405,7 +405,7 @@ class _VoiceHomeState extends State<VoiceHome> {
       width: MediaQuery.of(context).size.width * 0.93,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(6.0),
       ),
       padding: EdgeInsets.symmetric(
 //        vertical: 0.0,
@@ -475,10 +475,10 @@ class _VoiceHomeState extends State<VoiceHome> {
     }
 
     Widget widgetFotos = Container (
-      width: MediaQuery.of(context).size.width * 0.93,
+      width: MediaQuery.of(context).size.width * 1,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(6.0),
         ),
 
       child: RaisedButton(
@@ -522,7 +522,7 @@ class _VoiceHomeState extends State<VoiceHome> {
         width: MediaQuery.of(context).size.width * 0.93,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(4.0),
+          borderRadius: BorderRadius.circular(6.0),
           ),
       padding: EdgeInsets.all(8.0),
       child: GridView.extent(
