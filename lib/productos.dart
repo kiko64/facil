@@ -34,7 +34,6 @@ class _MyProductoPageState extends State<MyProductoPage> {
   }
 
   void onQueryChanged(BuildContext context, String query) {
-
     setState(() {
       _queryText = '$query';                                                    // Cambio,
     });
@@ -63,7 +62,7 @@ class _MyProductoPageState extends State<MyProductoPage> {
         // of interaction with a Future.
         child: FutureBuilder<List<Producto>> (                                  // function
 //          future: downloadProducto( _queryText ),                             // Cambio, Aqui es donde cambio
-          future: Buscar.searchloadProducto( widget.value, _queryText ),        // Cambio, Aqui es donde cambio
+          future: Buscar.searchloadProducto( widget.value, _queryText ),        // Cambio, Json string, query
           //We pass a BuildContext and an AsyncSnapshot object which is an
           //Immutable representation of the most recent interaction with
           //an asynchronous computation.
@@ -209,14 +208,14 @@ class _CustomListViewState extends State<CustomListView> {
 
             RawMaterialButton(
               child: Text(
-                'Add to cart'.toUpperCase(),
+                'Adicionar'.toUpperCase(),
                 style: Theme.of(context)
                     .textTheme
                     .button
                     .copyWith(color: Theme.of(context).primaryColor),
                 ),
                 onPressed: _incrementCounter,
-//              onPressed: ()=> _addProductToCartCallback(_productProducto),
+//                onPressed: ()=> _addProductToCartCallback(_productProducto),
             )
           ],
         )

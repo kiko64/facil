@@ -48,13 +48,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: MyAppBar(_cartState.totalItems),
+
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ProductList(_addProductToCart),
+          padding: const EdgeInsets.all(6.0),
+          child: ProductList(_addProductToCart),
       ),
       endDrawer:
-          CartDrawer(_cartState, _editQuantityOfCartItem, _removeItemFromCart),
+
+      CartDrawer(_cartState, _editQuantityOfCartItem, _removeItemFromCart),
+
     );
   }
 }

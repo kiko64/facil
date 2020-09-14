@@ -139,7 +139,7 @@ class ProductInMemoryRepository implements ProductRepository {
     String _products = await Buscar.averiguarProductos();                        // Viene el json como un String
 
     return Future.delayed(
-        const Duration(seconds: 2), () => _parse(jsonDecode(_products)));
+        const Duration(milliseconds: 100), () => _parse(jsonDecode(_products))); // Duration(seconds: 2)
   }
 
   List<Product> _parse(List<dynamic> json) {

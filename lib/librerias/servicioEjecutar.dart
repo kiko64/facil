@@ -4,13 +4,15 @@ import 'package:http/http.dart' as http;
 
 import '../globals.Dart' as globals;
 import '../productos.dart';
+import '../transacciones.dart';
 import '../registros.dart';
 import 'package:facilapp/librerias/modeloEjecutar.dart';
 
 
 class Buscar {
 
-  static const servicioEjecutar = 'https://ocobosoft.000webhostapp.com/consultaEjecutar.php';
+  static const servicioTransaccion = 'https://ocobosoft.000webhostapp.com/consultaTransaccion.php';
+  static const servicioRegistro = 'https://ocobosoft.000webhostapp.com/consultaRegistro.php';
   static const servicioMovimiento = 'https://ocobosoft.000webhostapp.com/consultaMovimiento.php';
   static const servicioCuenta = 'https://ocobosoft.000webhostapp.com/consultaCuenta.php';
   static const servicioDato = 'https://ocobosoft.000webhostapp.com/consultaDato.php';
@@ -31,19 +33,42 @@ class Buscar {
   }
 
 
-  Future<List<Producto>> downloadProducto( String value ) async {               // Ya no se usa era para la prueba inicial que selecionaba agendas como productos
+  Future<List<Producto>> downloadProductoOld( String value ) async {            // Ya no se usa era para la prueba inicial que selecionaba agendas como productos
     String sJson = await Buscar.averiguarActividades( value );                  // value = 'todos,0,todos' -> Busca en la BD -> StringJson
     return Buscar.parseProducto( sJson );                                       // Cambio, pasa el StringJson --> List<Producto>
   }
 
 
-  static Future<List<Registro>> downloadRegistro( String value, String query ) async {
+  static Future<List<Producto>> downloadProducto( String value, String query ) async {
     if ( query.length == 0 )
-      return Buscar.parseRegistro( value );                                     // Cambio, pasa el string --> objeto
+      return Buscar.parseProducto( value );                                  // Cambio, pasa el string --> objeto
+    else {
+      productos = Buscar.parseProducto( value );                         // Lo carga con el de todos
+      return productos.where(
+              (registro) => registro.completo.toLowerCase().contains(query.toLowerCase())).toList();
+    }
+  }
+
+
+  static Future<List<Transaccion>> downloadTransaccion( String value, String query ) async {
+    if ( query.length == 0 )
+      return Buscar.parseTransaccion( value );                                  // Cambio, pasa el string --> objeto
+    else {
+      transacciones = Buscar.parseTransaccion( value );                         // Lo carga con el de todos
+      return transacciones.where(
+              (registro) => registro.descripcion.toLowerCase().contains(query.toLowerCase())).toList();
+    }
+  }
+
+
+  static Future<List<Registro>> downloadRegistro( String value, String query ) async {
+    if ( query.length == 0 ) {
+      return Buscar.parseRegistro( value );                                     // Retorma Registro.fromJson(json)).toList() <- JSon ya que query = ''
+    }
     else {
       registros = Buscar.parseRegistro( value );                                // Lo carga con el de todos
       return registros.where(
-              (registro) => registro.descripcion.toLowerCase().contains(query.toLowerCase())).toList();
+              (registro) => registro.completo.toLowerCase().contains(query.toLowerCase())).toList();
     }
   }
 
@@ -85,11 +110,15 @@ class Buscar {
   }
 
 
+  static List<Transaccion> parseTransaccion(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Transaccion>((json) => new Transaccion.fromJson(json)).toList();
+  }
+
   static List<Registro> parseRegistro(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<Registro>((json) => new Registro.fromJson(json)).toList();
   }
-
 
   static List<Movimiento> parseMovimiento(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
@@ -133,17 +162,43 @@ class Buscar {
   }
 
 
-  static Future<String> ejecutar( String consulta ) async {
+  static Future<String> transaccion( String consulta ) async {
 
     try {
       var map = Map<String, dynamic>();
       map['action']   = _getData;
       map['consulta'] = consulta;
 
-      final response = await http.post( servicioEjecutar, body: map );
+      final response = await http.post( servicioTransaccion, body: map );
 
       if ( 200 == response.statusCode && response.contentLength > 0 ) {
-        print('datos(R): ${response.body}');
+//        print('datos(R): ${response.body}');
+        return response.body;
+      }
+      else {
+        print('datos(R): 0');
+        return 'error';
+      }
+    } catch (e) {
+//      print('datos(R): error');
+      return 'error';                                                           // return an empty list on exception/error
+    }
+  }
+
+
+  static Future<String> registro( String consulta ) async {
+
+//    print('************ CONSULTA ************: ${consulta}');
+
+    try {
+      var map = Map<String, dynamic>();
+      map['action']   = _getData;
+      map['consulta'] = consulta;
+
+      final response = await http.post( servicioRegistro, body: map );
+
+      if ( 200 == response.statusCode && response.contentLength > 0 ) {
+//        print('datos(R): ${response.body}');
         return response.body;
       }
       else {
@@ -155,7 +210,6 @@ class Buscar {
       return 'error';                                                           // return an empty list on exception/error
     }
   }
-
 
   static Future<String> getCuenta( String consulta ) async {
 
@@ -169,7 +223,7 @@ class Buscar {
       final response = await http.post( servicioCuenta, body: map );
 
       if ( 200 == response.statusCode && response.contentLength > 0 ) {
-        print('datos(R): ${response.body}');
+//        print('datos(R): ${response.body}');
         return response.body;
       }
       else {
@@ -195,7 +249,7 @@ class Buscar {
       final response = await http.post( servicioProducto );
 
       if ( 200 == response.statusCode && response.contentLength > 0 ) {
-        print('datos(R): ${response.body}');
+//        print('datos(R): ${response.body}');
         return response.body;
       }
       else {
@@ -221,7 +275,7 @@ class Buscar {
       final response = await http.post( servicioMovimiento, body: map );
 
       if ( 200 == response.statusCode && response.contentLength > 0 ) {
-        print('datos(R): ${response.body}');                                    // return a json's string
+//        print('datos(R): ${response.body}');                                    // return a json's string
         return response.body;
       }
       else {
@@ -268,7 +322,7 @@ class Buscar {
 
     String actividades;
     actividades = await getConsulta( consulta0, consulta1, consulta2, 'A' );    // Consulta de actividad
-    print('actividades: ${actividades}');
+//    print('actividades: ${actividades}');
 
     return actividades.toString();
   }
@@ -315,7 +369,7 @@ class Buscar {
 
     String auxiliares;
     auxiliares = await getConsulta( consulta0, consulta1, consulta2, 'D' );     // Consulta de auxiliares
-    print('auxiliares: ${auxiliares}');
+//    print('auxiliares: ${auxiliares}');
 
     i = auxiliares.toString().indexOf('\"id\"');                                // Buscar el primer Auxiliar
     j = auxiliares.toString().indexOf('\"descripcion\"');
@@ -334,7 +388,7 @@ class Buscar {
 
     String cuentas;
     cuentas = await getCuenta( consulta );                                    // Consulta de cuentas
-    print('cuentas: ${cuentas}');
+//    print('cuentas: ${cuentas}');
 
     int i = cuentas.toString().indexOf('\"id\"');                                // Buscar el primer Auxiliar
     int j = cuentas.toString().indexOf('\"descripcion\"');
@@ -346,19 +400,19 @@ class Buscar {
   }
 
 
-  static Future<String> averiguarRegistros() async {
+  static Future<String> averiguarTransacciones() async {
 
     String consulta =
       "select e.ejecutar, DATE_FORMAT(e.fecha,'%d %b %Y') as fecha, e.usuario, e.seguimiento, e.agenda, e.documento, " +
-      "e.cuenta, format(e.valor,0) as valor, e.observacion, e.archivo0, e.archivo1, e.archivo2, e.archivo3, " +
+      "e.cuenta, format(e.valor,0) as valor, e.observacion, e.registro, e.mascara, e.archivo0, e.archivo1, e.archivo2, e.archivo3, " +
       "a.descripcion, d.nombre as nombre, concat('assets\/',e.seguimiento,'.png') as imagen, concat(' (', r.descripcion, ')') as desSeguimiento " +
       "from  g_ejecutar e, g_agenda a, v_documento d, g_registro r " +
       "where e.agenda = a.agenda and e.documento = d.documento and e.seguimiento = r.registro " +
       "order by e.ejecutar ";
 
     String registros;
-    registros = await ejecutar( consulta );                                  // Consulta de registros
-    print('actividades: ${registros}');
+    registros = await transaccion( consulta );                                  // Consulta de registros
+//    print('actividades: ${registros}');
 
     return registros.toString();
   }
@@ -378,11 +432,48 @@ class Buscar {
 
     String productos;
     productos = await getProducto();                                                    // La consulta esta en: consultaProducto.php
-    print('actividades: ${productos}');
+//    print('actividades: ${productos}');
 
     return productos.toString();
   }
 
+  static Future<String> averiguarRegistros( String id ) async {
+
+    String consulta;
+    if ( id.trim().length != 0 )
+      consulta =
+        "select v.registro, v.t_comprobante as desRegistro, CONCAT (v.nombre, nombreAdicional( v.documento ), ' ( \$', FORMAT(v.valor,0), ' )' ) AS nombre, " +
+        "CONCAT ( v.t_comprobante, ' ', v.nombre ) as completo " +
+        "from v_registro v " +
+        "where v.valor != 0 " +
+        "and v.registro in (" + id.toString() + ") " +
+        "union " +
+        "select v.registro, v.t_comprobante as desRegistro, CONCAT (v.nombre, nombreAdicional( v.documento ) ) AS nombre, " +
+        "CONCAT ( v.t_comprobante, ' ', v.nombre ) as completo " +
+        "from v_registro v " +
+        "where v.valor = 0 " +
+        "and v.registro in (" + id.toString() + ") " +
+        "order by 1";
+    else
+      consulta =
+        "select v.registro, v.t_comprobante as desRegistro, CONCAT (v.nombre, nombreAdicional( v.documento ), ' ( \$', FORMAT(v.valor,0), ' )' ) AS nombre, " +
+        "CONCAT ( v.t_comprobante, ' ', v.nombre ) as completo " +
+        "from v_registro v " +
+        "where v.valor != 0 " +
+        "union " +
+        "select v.registro, v.t_comprobante as desRegistro, CONCAT (v.nombre, nombreAdicional( v.documento ) ) AS nombre, " +
+        "CONCAT ( v.t_comprobante, ' ', v.nombre ) as completo " +
+        "from v_registro v " +
+        "where v.valor = 0 " +
+        "order by 1";
+
+//    print('************ Consulta ************: ${consulta}');
+    String registros;
+    registros = await registro( consulta );                                     // Consulta de registros
+//    print('actividades: ${registros}');
+
+    return registros.toString();
+  }
 
   static Future<String> averiguarMovimientos( String id ) async {
 
@@ -393,11 +484,11 @@ class Buscar {
       "and m.registro = " + id +
       " order by m.orden desc ";
 
-    print('consulta: ${consulta}');
+//    print('consulta: ${consulta}');
 
     String movimientos;
     movimientos = await getMovimiento( consulta );                              // json's String
-    print('movimientos: ${movimientos}');
+//    print('************ movimientos ************: ${movimientos}');
 
     return movimientos.toString();
   }

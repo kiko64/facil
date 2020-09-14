@@ -127,6 +127,8 @@ class _CustomListViewState extends State<CustomListView> {
 
                 print('cuenta: ${globals.cuentaSaved}');
 //                Navigator.pop(context, 'Yep!');
+                Navigator.pop(context);
+
               });
             }
         ),

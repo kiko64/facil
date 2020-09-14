@@ -14,8 +14,10 @@ final ThemeData kIOSTheme = new ThemeData(
 
 final ThemeData kDefaultTheme = new ThemeData(
 
+  primaryColor: Colors.teal[900],
   primarySwatch: Colors.teal,                                                   // Color de sombra
-  primaryColor: Colors.teal,
+  accentColor: Colors.teal,
+
 
 //        primaryColorBrightness: Brightness.light,
 //        primaryIconTheme: const IconThemeData.fallback().copyWith(
@@ -44,7 +46,6 @@ void main() {
       di.init();
 
       runApp(facilApp());
-
 }
 
 //void main() => runApp(OirApp());

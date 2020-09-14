@@ -132,6 +132,8 @@ class _CustomListViewState extends State<CustomListView> {
                 globals.actividadNamed = actividad.descripcion;
                 globals.tipoSaved      = actividad.tipo;
                 print('actividad: ${globals.actividadSaved}');
+                Navigator.pop(context);
+
               });
             }
         ),

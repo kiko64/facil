@@ -32,7 +32,6 @@ class _MyRegistroPageState extends State<MyRegistroPage> {
   }
 
   void onQueryChanged(BuildContext context, String query) {
-
     setState(() {
       _queryText = '$query';                                                    // Cambio,
     });
@@ -50,27 +49,28 @@ class _MyRegistroPageState extends State<MyRegistroPage> {
     return new Scaffold(
       appBar: SearchBar(
         iconified: true,
-        searchHint: 'Buscar transacciones...',
+        searchHint: 'Buscar registros...',
         defaultBar: AppBar(
-          title: Text('Transacciones',style: TextStyle( fontSize: 16.0, fontWeight: FontWeight.bold ), ),
-          ),
+          title: Text('Registros',style: TextStyle( fontSize: 16.0, fontWeight: FontWeight.bold ), ),
+        ),
         onQueryChanged: (query) => onQueryChanged(context, query),              // Cambio,
         onQuerySubmitted: (query) => onQuerySubmitted(context, query),
-        ),
+      ),
 
       body: Center(
         child: FutureBuilder<List<Registro>>(                                   // function
-          future: Buscar.downloadRegistro( widget.value, _queryText ),          // Cambio, pasa el String y lo carga al objeto
+          future: Buscar.downloadRegistro( widget.value, _queryText ),          // Cambio, pasa el String y lo carga al objeto, ya que el FutureBuilder espera el List<Registro>
           builder: (context, snapshot) {
             if (snapshot.hasData) {
 //              List<Registro> registros = snapshot.data;                       // defino la variable registros
               registros = snapshot.data;                                        // defino la variable registros
 //              return CustomListView(registros: registros);                    // Es el Widget detalle
               return CustomListView();                                          // Es el Widget detalle
-            } else
-                if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
+            }
+            else
+              if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
             //return  a circular progress indicator.
             return new CircularProgressIndicator();
           },
@@ -99,7 +99,7 @@ class _CustomListViewState extends State<CustomListView> {
   @override
   void initState() {
     if ( globals.registroSaved == 0 )
-      globals.registroSaved = int.parse( registros.first.ejecutar );            // int.parse( widget.registros.first.ejecutar );
+      globals.registroSaved = int.parse( registros.first.registro );            // int.parse( widget.registros.first.ejecutar );
   }
 
   @override
@@ -127,73 +127,61 @@ class _CustomListViewState extends State<CustomListView> {
           ),
         ),
       ),
-
-    onDismissed: (direction) {
+/*
+      onDismissed: (direction) {
 //      bloc.delete( item.amparo, item.poliza );          // Manejo DB Borrar
-      String sentencia = 'update g_ejecutar set seguimiento = 12605 where ejecutar =' + registro.ejecutar;
+        String sentencia = 'update registro set seguimiento = 12605 where registro =' + registro.registro;
 //      sentencia = await Buscar.ejecutar( sentencia );                         // Ingresar a g_ejecutar
-      sentencia =  Buscar.ejecutar( sentencia ) as String;                      // Ingresar a g_ejecutar
+        sentencia =  Buscar.registro( sentencia ) as String;                    // Ingresar a g_ejecutar
 
-    },
-
+      },
+*/
       child: Column(
         children: <Widget>[
           ListTile(
 
-            leading: Image.asset( registro.imagen.toString() ),
-      //    leading: FadeInImage.memoryNetwork(
-      //    placeholder: kTransparentImage,
-      //      image: 'https://ocobosoft.000webhostapp.com/tmp/' + registro.archivo0,
-      //    ),
+              leading: CircleAvatar(
+                child: Text( registro.registro )
+              ),
 
-            title: Text(
-              registro.descripcion + registro.desSeguimiento + ', ' + registro.fecha,
-              style: new TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
+              title: Text(
+                registro.desRegistro,
+                style: new TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
+              ),
 
-            subtitle: Text( registro.nombre +' ( \$'+ registro.valor + ' )' ),
+              subtitle: Text( registro.nombre ),
 
-            trailing: IconButton(
-              icon: const Icon(Icons.attach_file, ),
-      //      icon: const Icon(Icons.keyboard_arrow_right, ),
+              trailing: IconButton(
+                icon: const Icon(Icons.keyboard_arrow_right, ),
 
-            onPressed: () async {
-                String _soporte = 'https://ocobosoft.000webhostapp.com/tmp/' + registro.archivo0;
-
-                print('llamar: ${_soporte}');
-                var route = MaterialPageRoute(
+                onPressed: () async {
+                  String _movimientos = await Buscar.averiguarMovimientos( registro.registro );      // Viene el json como un String
+                  print('llamar: ${_movimientos}');
+                  var route = MaterialPageRoute(
                   builder: (BuildContext context) =>
-                  MySoportePage(value: _soporte ),                          // Cambio
-                );
-                Navigator.of(context).push(route);
-            },
+                    MyMovimientoPage(value: _movimientos ),                     // Cambio
+                  );
+                  Navigator.of(context).push(route);
+                },
 
               ),
 
-      /*
-                  trailing: IconButton(
-                    icon: const Icon(Icons.keyboard_arrow_right, ),
+              onTap: () {
+                Navigator.push(                                                 // Manejo DB Actualizar
+                    context,                                                    // llamar el soporte
+                    MaterialPageRoute(
+//                        builder: (context) => AnexoPage(actual: item)
+                    )
+                );
+              },
 
-                    onPressed: () async {
-                      String _movimientos = await Buscar.averiguarMovimientos( registro.ejecutar );      // Viene el json como un String
-                      print('llamar: ${_movimientos}');
-                      var route = MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            MyMovimientoPage(value: _movimientos ),                   // Cambio
-                        );
-                      Navigator.of(context).push(route);
-                    },
-
-                  ),
-      */
-
-      //            onTap: () {
-      //              setState(() {
-      //                globals.registroSaved = int.parse( registro.ejecutar );
-      //                print('registro: ${globals.registroSaved}');
-      //              });
-      //            }
+            //            onTap: () {
+            //              setState(() {
+            //                globals.registroSaved = int.parse( registro.ejecutar );
+            //                print('registro: ${globals.registroSaved}');
+            //              });
+            //            }
           ),
 
           Divider(),                                                              // <-- Divider

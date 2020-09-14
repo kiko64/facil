@@ -1,3 +1,4 @@
+import 'package:facilapp/registros.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,15 +10,17 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/foundation.dart';                     //new
 
+import 'appProductos.dart';
 import 'globals.Dart' as globals;
 import 'librerias/servicioEjecutar.dart';
 import 'auxiliares.dart';
 import 'actividades.dart';
-import 'registros.dart';
+import 'transacciones.dart';
 import 'productos.dart';
 import 'cuentas.dart';
-import 'package:facilapp/pos/presentation/home/home_page.dart';
+import 'main.dart';
 
 class MyTransaccion extends StatelessWidget {
 
@@ -25,11 +28,11 @@ class MyTransaccion extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.teal,                                             // Color de sombra
-        primaryColor: Colors.teal,
 
-        ),
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
+          : kDefaultTheme,
+
       home: VoiceHome(),
     );
   }
@@ -124,7 +127,7 @@ class _VoiceHomeState extends State<VoiceHome> {
     setState(() {
       globals.actividadSaved = 0;
       globals.auxiliarSaved  = 0;
-      globals.registroSaved  = 0;
+      globals.transaccionSaved  = 0;
       globals.cuentaSaved    = 0;
 
       globals.actividadNamed = '';
@@ -201,15 +204,14 @@ class _VoiceHomeState extends State<VoiceHome> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
 
     Widget oyendo = Container(
 
-      width: MediaQuery.of(context).size.width * 0.93,
+      width: MediaQuery.of(context).size.width * 1,
       decoration: BoxDecoration(
-        color: Colors.teal,
+        color: Colors.teal[900],
         borderRadius: BorderRadius.circular(6.0),
       ),
       padding: EdgeInsets.symmetric(
@@ -538,16 +540,22 @@ class _VoiceHomeState extends State<VoiceHome> {
       )
     );
 
-    Widget widgetTarjeta = Card (
+    Widget widgetOir = Card (
       child: Column(
         children: [
 
           oyendo,
-//              Divider(color: Colors.white,),
-          SizedBox(height: 6.0),
 
           widgetEsperar,
 //              Divider(color: Colors.white,),
+        ],
+      ),
+    );
+
+
+    Widget widgetTarjeta = Card (
+      child: Column(
+        children: [
 
           widgetTexto,
           widgetActividad,
@@ -574,19 +582,21 @@ class _VoiceHomeState extends State<VoiceHome> {
 //          leading: IconButton( icon: Icon(Icons.menu ),
 //            onPressed: _openDrawer,
 //          ),
-            title: const Text('Registro de Transacciones',
+            title: const Text('Registro de Transacción',
               style: TextStyle(fontSize: 16.0,
                   fontWeight: FontWeight.bold),
             ),
           ),
         ),
+
         drawer: MenuLateral(),
 
         body: Container(
           child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2, ),
+            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2, ),
 //              padding: const EdgeInsets.all( 10 ),
             children: <Widget>[
+              widgetOir,
               widgetTarjeta,
             ],
             ),
@@ -670,7 +680,7 @@ class _VoiceHomeState extends State<VoiceHome> {
                         ", '" + _observacion.text + "', 0, 0, " + sentencia + ")" ;
 
                     print('eecutar(->): ${sentencia}');
-                    sentencia = await Buscar.ejecutar( sentencia );             // Ingresar a g_ejecutar
+                    sentencia = await Buscar.transaccion( sentencia );             // Ingresar a g_ejecutar
                     print('ejecutar(<-): ${sentencia}');
 
                     if ( sentencia == 'Error' ) {
@@ -713,57 +723,101 @@ class MenuLateral extends StatelessWidget{
 
           new ListTile(
             title: Text("Comunicaciones",),
-            leading: Icon(Icons.book,),
+            leading: Icon(Icons.book, size: 30.0, color: Colors.black,),
             onTap: () async {
             },
           ),
 
           new ListTile(
             title: Text("Inquietudes",),
-            leading: Icon(Icons.create,),
+            leading: Icon(Icons.create, size: 30.0, color: Colors.black,),
             onTap: () async {
             },
           ),
 
           new ListTile(
             title: Text("Transacciones"),
-            leading: Icon(Icons.format_list_numbered,),
+            leading: Icon(Icons.format_list_numbered, size: 30.0, color: Colors.black,),
             onTap: () async {
 
-              String _registros = await Buscar.averiguarRegistros();            // Viene el json como un String
+              String _registros = await Buscar.averiguarTransacciones();            // Viene el json como un String
+              print('llamar: ${_registros}');
+              var route = MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    MyTransaccionPage(value: _registros ),                         // Cambio
+              );
+              Navigator.of(context).push(route);
+            },
+          ),
+
+          new ListTile(
+            title: Text("Registros"),
+            leading: Icon(Icons.library_books, size: 30.0, color: Colors.black,),
+            onTap: () async {
+
+              String _registros = await Buscar.averiguarRegistros( "" );        // Retorna el json como un String de todos los registros
               print('llamar: ${_registros}');
               var route = MaterialPageRoute(
                 builder: (BuildContext context) =>
                     MyRegistroPage(value: _registros ),                         // Cambio
               );
               Navigator.of(context).push(route);
-
             },
           ),
-
+/*
+          new ListTile(
+            title: Text("Actores",),
+            leading: Icon(Icons.people,),
+            onTap: () async {
+            },
+          ),
+          new ListTile(
+            title: Text("Servicios",),
+            leading: Icon(Icons.apps,),
+            onTap: () async {
+            },
+          ),
+*/
           new ListTile(
             title: Text("Configuración",),
-            leading: Icon(Icons.build,),
+            leading: Icon(Icons.settings, size: 30.0, color: Colors.black,),
             onTap: () async {
             },
           ),
 
           new ListTile(
-            leading: Icon(Icons.local_grocery_store),
-            title: Text("Compras"),
+            leading: Icon(Icons.local_grocery_store, size: 30.0, color: Colors.black,),
+            title: Text("ComprasConsulta"),
             onTap: () async {
 
               String _items = await Buscar.averiguarProductos();                // Viene el json como un String
               print('llamar: ${_items}');
               var route = MaterialPageRoute(
                 builder: (BuildContext context) =>
-//                    MyProductoPage( value: _items ),                            // Cambio
-                  HomePage(),
+                    MyProductoPage( value: _items ),                            // Cambio versión kiko
+//                  HomePage(),                                                 // Cambio versión POS
                 );
               Navigator.of(context).push(route);
 
             },
-            ),
+          ),
+
+          new ListTile(
+            leading: Icon(Icons.local_grocery_store, size: 30.0, color: Colors.black,),
+            title: Text("ComprasPedido"),
+            onTap: () async {
+
+              String _items = await Buscar.averiguarProductos();                // Viene el json como un String
+              print('llamar: ${_items}');
+              var route = MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    AppProductos(),                                             // Cambio versión kiko
+//                  HomePage(),                                                 // Cambio versión POS
+              );
+              Navigator.of(context).push(route);
+
+            },
+          ),
 
         ],
       ) ,

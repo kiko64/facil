@@ -40,7 +40,7 @@ class ProductItem extends StatelessWidget {
           RawMaterialButton(
             child: Text(
   //            'Add to cart'.toUpperCase(),
-              'Adicionar',
+              'Adicionar'.toUpperCase(),
               style: Theme.of(context)
                   .textTheme
                   .button

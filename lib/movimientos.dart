@@ -93,6 +93,18 @@ class _CustomListViewState extends State<CustomListView> {
 
   Widget createViewItem(Movimiento movimiento, BuildContext context) {
 
+    Widget DbCr = new Row(
+        children: <Widget>[
+          Expanded(
+            child: new Text(movimiento.valorDB, textAlign: TextAlign.right),
+//              child: movimiento.valorDB != 0 ? Text(movimiento.valorDB, textAlign: TextAlign.right) : Text('')
+          ),
+          Expanded(
+            child: new Text(movimiento.valorCR, textAlign: TextAlign.right),
+          ),
+        ],
+    );
+
     return Column(
       children: <Widget>[
         ListTile(
@@ -102,12 +114,13 @@ class _CustomListViewState extends State<CustomListView> {
                 ),
 
             title: Text(
-              movimiento.cuenta + ', ' + movimiento.descripcion,
-              style: new TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              movimiento.cuenta + ', ' + movimiento.descripcion + ' - ' + movimiento.favorito,
+    style: new TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
 
               ),
-            subtitle: Text( movimiento.favorito +' '+ movimiento.valorDB + '  '+ movimiento.valorCR  ),
+            subtitle: DbCr,
+//            subtitle: Text( movimiento.favorito +' '+ movimiento.valorDB + '  '+ movimiento.valorCR  ),
 
             onTap: () {
               setState(() {
@@ -121,6 +134,8 @@ class _CustomListViewState extends State<CustomListView> {
 
       ],
     );
+
   }
+
 
 }

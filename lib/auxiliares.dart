@@ -112,11 +112,11 @@ class _CustomListViewState extends State<CustomListView> {
               auxiliar.descripcion,
               style: new TextStyle(fontWeight: FontWeight.normal),
               textAlign: TextAlign.left,
-              ),
+            ),
             trailing: Icon(
               globals.auxiliarSaved == int.parse(auxiliar.id) ? Icons.check_circle : Icons.cancel,   // panorama_fish_eye, Icons.loop
               color: globals.auxiliarSaved == int.parse(auxiliar.id) ? Colors.teal : null,
-              ),
+            ),
 
             onTap: () {
               setState(() {
@@ -124,7 +124,7 @@ class _CustomListViewState extends State<CustomListView> {
                 globals.auxiliarNamed = auxiliar.descripcion;
 
                 print('auxiliar: ${globals.auxiliarSaved}');
-//                Navigator.pop(context, 'Yep!');
+                Navigator.pop(context);                                         // Devolverme a la forma de transacción
               });
             }
         ),

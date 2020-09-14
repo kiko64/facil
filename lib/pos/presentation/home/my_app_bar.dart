@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loader_search_bar/loader_search_bar.dart';
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final int _cartItemsCounter;
 
   MyAppBar(this._cartItemsCounter, {Key key})
@@ -9,7 +9,32 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         super(key: key);
 
   @override
-  final Size preferredSize; //
+  final Size preferredSize;
+  @override
+  _MyAppBarState createState() => _MyAppBarState();
+}
+
+class _MyAppBarState extends State<MyAppBar> {
+
+  String _queryText;
+
+  @override
+  void initState() {
+    _queryText = '';                                                            // Cambio,
+    super.initState();
+  }
+
+  void onQueryChanged(BuildContext context, String query) {
+    setState(() {
+      _queryText = '$query';                                                    // Cambio,
+    });
+  }
+
+  onQuerySubmitted(BuildContext context, String query) {
+    _queryText = '$query';
+    print('_onQuerySubmitted: ${_queryText}');
+    setState(() => _queryText = '$query');                                      // 'Query submitted!'
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +61,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             shoppingCartIcon(context)
           ],
         ),
-//        onQueryChanged: (query) => onQueryChanged(context, query),            // Cambio, este es
+          onQueryChanged: (query) => onQueryChanged(context, query),            // Cambio, este es
+          onQuerySubmitted: (query) => onQuerySubmitted(context, query),
       ),
     );
 
@@ -44,7 +70,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget shoppingCartIcon(BuildContext context) {
 
-    final badge = _cartItemsCounter != 0 ? counterBadge() : Container();
+    final badge = widget._cartItemsCounter != 0 ? counterBadge() : Container();
 
     // Using Stack to show Notification Badge
     return Stack(
@@ -75,7 +101,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           minHeight: 18,
         ),
         child: Text(
-          '$_cartItemsCounter',
+          '${widget._cartItemsCounter}',
           style: TextStyle(
             color: Colors.white,
             fontSize: 10,

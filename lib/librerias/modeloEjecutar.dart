@@ -55,12 +55,12 @@ class Cuenta {
 }
 
 
-class Registro {
+class Transaccion {
   final String ejecutar, fecha, usuario, seguimiento, agenda, documento,
-  cuenta, valor, observacion, archivo0, archivo1, archivo2, archivo3,
+  cuenta, valor, registro, mascara, observacion, archivo0, archivo1, archivo2, archivo3,
   descripcion, nombre, desSeguimiento, imagen;
 
-  Registro( {
+  Transaccion( {
     this.ejecutar,
     this.fecha,
     this.usuario,
@@ -70,6 +70,8 @@ class Registro {
 
     this.cuenta,
     this.valor,
+    this.registro,
+    this.mascara,
     this.observacion,
     this.archivo0,
     this.archivo1,
@@ -82,8 +84,8 @@ class Registro {
     this.imagen,
   } );
 
-  factory Registro.fromJson(Map<String, dynamic> jsonData) {
-    return Registro(
+  factory Transaccion.fromJson(Map<String, dynamic> jsonData) {
+    return Transaccion(
       ejecutar:    jsonData['ejecutar'],
       fecha:       jsonData['fecha'],
       usuario:     jsonData['usuario'],
@@ -94,6 +96,9 @@ class Registro {
       cuenta:      jsonData['cuenta'],
       valor:       jsonData['valor'],
       observacion: jsonData['observacion'],
+      registro:    jsonData['registro'],
+      mascara:    jsonData['mascara'],
+
       archivo0:    jsonData['archivo0'],
       archivo1:    jsonData['archivo1'],
       archivo2:    jsonData['archivo2'],
@@ -103,6 +108,28 @@ class Registro {
       nombre:      jsonData['nombre'],
       desSeguimiento: jsonData['desSeguimiento'],
       imagen:      jsonData['imagen'],
+    );
+  }
+
+}
+
+
+class Registro {
+  final String registro, desRegistro, nombre, completo;
+
+  Registro( {
+    this.registro,
+    this.desRegistro,
+    this.nombre,
+    this.completo,
+  } );
+
+  factory Registro.fromJson(Map<String, dynamic> jsonData) {
+    return Registro(
+      registro:    jsonData['registro'],
+      desRegistro: jsonData['desRegistro'],
+      nombre:      jsonData['nombre'],
+      completo:    jsonData['completo'],
     );
   }
 
@@ -173,5 +200,3 @@ class Producto {
     );
   }
 }
-
-

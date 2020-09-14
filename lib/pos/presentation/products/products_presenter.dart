@@ -8,7 +8,10 @@ class ProductsPresenter {
 
   ProductsPresenter(this._getProductsUseCase);
 
-  Future<ProductsState> search(String searchTerm) {
+  Future<ProductsState> search(String searchTerm) {                             // searchTerm <- 'Element'
+
+    print('searchTerm: ${searchTerm.toString()}');
+
     return _getProductsUseCase
         .execute()
         .then((products) => _mapToState(searchTerm, products));

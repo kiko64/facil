@@ -23,7 +23,7 @@ const jsonCartOld = '''[
   }
   ]''';
 
-const jsonCart = '''[
+const jsonCartAnt = '''[
   {
     "id": "1001",
     "image":
@@ -33,6 +33,8 @@ const jsonCart = '''[
     "quantity": 3
   }
   ]''';
+
+const jsonCart = '''[]''';                                                      // Empty json
 
 class CartInMemoryRepository implements CartRepository {
   Cart cart = Cart.createEmpty();
@@ -60,6 +62,7 @@ class CartInMemoryRepository implements CartRepository {
         jsonItem['image'],
         jsonItem['title'],
         jsonItem['price'],
-        jsonItem['quantity'])).toList());
+        jsonItem['quantity'])).toList()
+    );
   }
 }
