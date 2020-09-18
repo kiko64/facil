@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:facilapp/pos/presentation/book/pages/list_books.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';                     //new
+import 'package:flutter/foundation.dart'; //new
 import 'package:flutter/cupertino.dart';
 
 import 'main.dart';
 import 'login.dart';
 import 'transaccion.dart';
 
-
 class facilApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,14 +29,13 @@ class facilApp extends StatelessWidget {
 //      title: 'Emisión poliza',
 
       theme: defaultTargetPlatform == TargetPlatform.iOS
-        ? kIOSTheme
-        : kDefaultTheme,
+          ? kIOSTheme
+          : kDefaultTheme,
 
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
 
-      home: MyTransaccion(),
-
+      home: ListBookScreen(),
     );
   }
 
