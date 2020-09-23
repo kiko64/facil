@@ -8,3 +8,9 @@ abstract class CardState extends Equatable {
 }
 
 class CardInitial extends CardState {}
+
+class RegisteredBook extends CardState {}
+
+class FailedRegisterBook extends CardState {}
+
+class LoadingRegister extends CardState {}

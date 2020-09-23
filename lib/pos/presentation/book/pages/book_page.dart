@@ -236,7 +236,7 @@ class BookScreenState extends State<_BookScreen> {
                       FocusScope.of(context).requestFocus(new FocusNode());
                       if (_formKeyBook.currentState.validate()) {
                         if (_book == null) {
-                          _bookCubit.registerBook(
+                          BlocProvider.of<BookCubit>(context).registerBook(
                               book: Book(
                                   name: _nameControler.text,
                                   numberOfPages:

@@ -11,9 +11,12 @@ class CardCubit extends Cubit<CardState> {
   final _bookRepository = BookRepository();
 
   void registra(Book book) async {
+    emit(LoadingRegister());
     int code = await _bookRepository.registerBook(name: book.name);
     if (code == 200) {
       emit(RegisteredBook());
+    } else {
+      emit(FailedRegisterBook());
     }
   }
 }
