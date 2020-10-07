@@ -520,7 +520,7 @@ class Buscar {
 
 
   static String averiguarPartes( String cadena ) {
-
+ 
     int iniNumero = -1;
     int finNumero = -1;
     int indice    = 0;

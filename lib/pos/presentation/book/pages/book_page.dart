@@ -1,5 +1,6 @@
 import 'package:facilapp/pos/models/book.dart';
 import 'package:facilapp/pos/presentation/book/cubit/book_cubit.dart';
+import 'package:facilapp/pos/presentation/widgets/textfieldform.dart';
 import 'package:facilapp/utils/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -119,6 +120,15 @@ class BookScreenState extends State<_BookScreen> {
               key: _formKeyBook,
               child: ListView(
                 children: [
+                  TextFieldForm(
+                    labelText: 'Texto1',
+                    onTap: () => print('object'),
+                  ),
+                  TextFieldForm(
+                    labelText: 'Texto2',
+                    hintText: 'hint1',
+                    onTap: () => print('object1'),
+                  ),
                   TextFormField(
                       controller: _nameControler,
                       autocorrect: true,

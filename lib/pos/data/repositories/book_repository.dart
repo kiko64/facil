@@ -4,15 +4,12 @@ import 'package:facilapp/pos/models/book.dart';
 import 'package:http/http.dart' as http;
 
 const URL_BASE =
-    "http://multimodulolibrerias-env.eba-mfxm2vgp.us-west-2.elasticbeanstalk.com/api/v1/book";
+    "http://multimodulolibrerias-env.eba-mfxm2vgp.us-west-2.elasticbeanstalk.com/api/v1/books";
 
 class BookRepository {
   Future<List<Book>> getAllBook({final name}) async {
-    var headers = {
-      HttpHeaders.contentTypeHeader: 'application/json',
-    };
     var url = URL_BASE;
-    var response = await http.get(url, headers: headers);
+    var response = await http.get(url);
     Map<String, dynamic> responseData = json.decode(response.body);
     List bookJson = responseData["data"].toList();
     List<Book> books =
