@@ -10,7 +10,7 @@ class AppbarOcobo extends StatelessWidget implements PreferredSizeWidget {
     // var screenHeight = screenSize.height;
     // var screenwidth = screenSize.width;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 60,horizontal: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
       child: Row(
         //   mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,5 +44,5 @@ class AppbarOcobo extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(50);
+  Size get preferredSize => Size.fromHeight(60);
 }

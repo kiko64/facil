@@ -379,7 +379,7 @@ import 'package:flutter/material.dart';
       borderRadius: BorderRadius.all(Radius.circular(4.0)),
     ),
     focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: Color( 0xff000000 ), width: 1, style: BorderStyle.solid, ),
+      borderSide: BorderSide(color: OcoboColors.primaryColor, width: 2, style: BorderStyle.solid, ),
       borderRadius: BorderRadius.all(Radius.circular(4.0)),
     ),
     // focusedErrorBorder: UnderlineInputBorder(

@@ -11,12 +11,17 @@ class ButtonNavigation extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-        textColor: OcoboColors.white,
-        child: Text(
-          text,
-          style: myTheme.primaryTextTheme.button,
-        ),
-        onPressed: navigator);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        RaisedButton(
+            textColor: OcoboColors.white,
+            child: Text(
+              text,
+              style: myTheme.primaryTextTheme.button,
+            ),
+            onPressed: navigator),
+      ],
+    );
   }
 }

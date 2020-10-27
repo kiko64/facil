@@ -58,19 +58,13 @@ class _HomeState extends State<Home> {
                         ButtonNavigation(
                           text: "Iniciar Sesión",
                           navigator: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login()));
+                            Navigator.of(context).pushNamed('/login');
                           },
                         ),
                         ButtonNavigation(
                           text: "Registrate",
                           navigator: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
+                            Navigator.of(context).pushNamed('/registerUser');
                           },
                         ),
                       ],

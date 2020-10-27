@@ -1,165 +1,195 @@
 import 'package:dropdown_formfield/dropdown_formfield.dart';
-import 'package:facilapp/src/features/transactions/ui/screens/login_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/widgets/appbar_ocobo_widget.dart';
+import 'package:facilapp/src/features/transactions/ui/widgets/button_navigation.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _correo = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final _formKeyRegisterUser = GlobalKey<FormState>();
+  String _company;
+  String _role;
+  bool _iconPassword;
+  bool _colorPassword;
+
+  @override
+  void initState() {
+    super.initState();
+    _colorPassword = false;
+    _iconPassword = true;
+    _company = '';
+    _role = '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              AppbarOcobo(
-                textAction: 'Iniciar Sesión',
-                navigator: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
-                },
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                  left: 45,
-                  right: 45,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Registro',
-                      style: TextStyle(fontFamily: "Poppins", fontSize: 20),
+        appBar: AppbarOcobo(
+          textAction: 'Iniciar Sesión',
+          navigator: () {
+            Navigator.of(context).pushNamed('/login');
+          },
+        ),
+        body: Form(
+          key: _formKeyRegisterUser,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Registro',
+                    style: TextStyle(fontFamily: "Poppins", fontSize: 20),
+                  ),
+                  TextFormField(
+                    controller: _name,
+                    cursorColor: Color(0xff6A9426),
+                    decoration: InputDecoration(
+                      labelText: 'Nombre Completo',
                     ),
-                    Theme(
-                      data: new ThemeData(
-                        primaryColor: Color(0xff6A9426),
-                        hintColor: Colors.black,
-                      ),
-                      child: TextFormField(
-                        cursorColor: Color(0xff6A9426),
-                        decoration: InputDecoration(
-                            labelText: 'Nombre Completo',
-                            labelStyle: TextStyle(
-                              fontSize: 14,
-                              fontFamily: "Poppinslight",
-                            )),
-                      ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Ingrese el nombre';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _correo,
+                    cursorColor: Color(0xff6A9426),
+                    decoration: InputDecoration(
+                      labelText: 'Correo',
                     ),
-                    Theme(
-                      data: new ThemeData(
-                        primaryColor: Color(0xff6A9426),
-                        hintColor: Colors.black,
-                      ),
-                      child: TextFormField(
-                        cursorColor: Color(0xff6A9426),
-                        decoration: InputDecoration(
-                            labelText: 'Correo',
-                            labelStyle: TextStyle(
-                              fontSize: 14,
-                              fontFamily: "Poppinslight",
-                            )),
-                      ),
-                    ),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        focusColor: Color(0xff6A9426),
-                        fillColor: Color(0xff6A9426),
-                        hoverColor: Color(0xff6A9426),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Color(0xff6A9426), width: 5)),
-                        //focusedBorder: InputBorder.,
-                        suffixIcon: Icon(
-                          Icons.visibility_off,
-                          color: Colors.black,
-                        ),
-                        labelText: 'Contraseña',
-                        labelStyle: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "Poppinslight",
-                        ),
-                      ),
-                    ),
-                    Theme(
-                      data: ThemeData(
-                        fontFamily: 'Poppinslight',
-                        hintColor: Colors.black,
-                        hoverColor: Colors.black,
-                      ),
-                      child: DropDownFormField(
-                        filled: false,
-                        titleText: 'Empresa',
-                        hintText: '',
-                        // value: 'OcoboSoft',
-                        onChanged: () {},
-                        dataSource: [
-                          {
-                            "display": "OcoboSoft",
-                            "value": "OcoboSoft",
-                          },
-                          {
-                            "display": "Ibacrea SAS",
-                            "value": "Ibacrea SAS",
-                          },
-                        ],
-                        textField: 'display',
-                        valueField: 'value',
-                      ),
-                    ),
-                    Theme(
-                      data: ThemeData(
-                        fontFamily: 'Poppinslight',
-                        hintColor: Colors.black,
-                        hoverColor: Colors.black,
-                      ),
-                      child: DropDownFormField(
-                        filled: false,
-                        titleText: 'Rol',
-                        hintText: '',
-                        // value: 'OcoboSoft',
-                        onChanged: () {},
-                        dataSource: [
-                          {
-                            "display": "Contador",
-                            "value": "Contador",
-                          },
-                          {
-                            "display": "Cliente",
-                            "value": "Contador",
-                          },
-                        ],
-                        textField: 'display',
-                        valueField: 'value',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 120,
-                    ),
-                    Container(
-                      height: 40,
-                      width: 300,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        textColor: Colors.white,
-                        color: Color(0xff6A9426),
-                        child: Text(
-                          'Registrarse',
-                          style: TextStyle(fontSize: 20, fontFamily: "Poppins"),
-                        ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Ingrese el correo';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _password,
+                    obscureText: _iconPassword,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: _iconPassword
+                            ? Icon(Icons.visibility_off)
+                            : Icon(Icons.visibility),
+                        color: _colorPassword ? Colors.red : Colors.black,
                         onPressed: () {
-                          Navigator.pop(context);
+                          if (_iconPassword) {
+                            _iconPassword = false;
+                          } else {
+                            _iconPassword = true;
+                          }
+                          setState(() {});
                         },
                       ),
-                    )
-                  ],
-                ),
+                      labelText: 'Contraseña',
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        _colorPassword = true;
+                        setState(() {});
+                        return 'Ingrese la contraseña';
+                      }
+                      _colorPassword = false;
+                      setState(() {});
+                      return null;
+                    },
+                  ),
+                  DropDownFormField(
+                    filled: false,
+                    titleText: 'Empresa',
+                    hintText: '',
+                    value: _company,
+                    onSaved: (value) {
+                      setState(() {
+                        _company = value;
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _company = value;
+                      });
+                    },
+                    dataSource: [
+                      {
+                        "display": "OcoboSoft",
+                        "value": "OcoboSoft",
+                      },
+                      {
+                        "display": "Ibacrea SAS",
+                        "value": "Ibacrea SAS",
+                      },
+                    ],
+                    textField: 'display',
+                    valueField: 'value',
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Seleccione una opción';
+                      }
+                      return null;
+                    },
+                  ),
+                  DropDownFormField(
+                    filled: false,
+                    titleText: 'Rol',
+                    hintText: '',
+                    value: _role,
+                    onSaved: (value) {
+                      setState(() {
+                        _role = value;
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _role = value;
+                      });
+                    },
+                    dataSource: [
+                      {
+                        "display": "Contador",
+                        "value": "Contador",
+                      },
+                      {
+                        "display": "Cliente",
+                        "value": "Cliente",
+                      },
+                    ],
+                    textField: 'display',
+                    valueField: 'value',
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Seleccione una opción';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 120,
+                  ),
+                  ButtonNavigation(
+                    text: 'Registrarse',
+                    navigator: () async {
+                      if (!_formKeyRegisterUser.currentState.validate()) {
+                        return;
+                      }
+                      // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/homeTransactions', (Route<dynamic> route) => false);
+                    },
+                  )
+                ],
               ),
-            ],
+            ),
           ),
         ));
   }

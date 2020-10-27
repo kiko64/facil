@@ -16,13 +16,15 @@ class _LoginState extends State<Login> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   Icon _iconEmail;
-  bool _colorPasword;
+  bool _iconPassword;
+  bool _colorPassword;
   bool _logueado = false;
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyLogin = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
-    _colorPasword = false;
+    _colorPassword = false;
+    _iconPassword = true;
   }
 
   @override
@@ -31,17 +33,16 @@ class _LoginState extends State<Login> {
         appBar: AppbarOcobo(
           textAction: 'Registrarse',
           navigator: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RegisterScreen()));
+            Navigator.of(context).pushNamed('/registerUser');
           },
         ),
         body: _logueado
             ? ListBookScreen()
             : Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: SingleChildScrollView(
+                key: _formKeyLogin,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -71,22 +72,31 @@ class _LoginState extends State<Login> {
                         ),
                         TextFormField(
                           controller: _password,
-                          obscureText: true,
+                          obscureText: _iconPassword,
                           decoration: InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.visibility_off,
-                              color: _colorPasword ? Colors.red : Colors.black,
+                            suffixIcon: IconButton(
+                              icon: _iconPassword
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility),
+                              color: _colorPassword ? Colors.red : Colors.black,
+                              onPressed: () {
+                                if (_iconPassword) {
+                                  _iconPassword = false;
+                                } else {
+                                  _iconPassword = true;
+                                }
+                                setState(() {});
+                              },
                             ),
                             labelText: 'Contraseña',
-                            
                           ),
                           validator: (value) {
                             if (value.isEmpty) {
-                              _colorPasword = true;
+                              _colorPassword = true;
                               setState(() {});
                               return 'Ingrese la contraseña';
                             }
-                            _colorPasword = false;
+                            _colorPassword = false;
                             setState(() {});
                             return null;
                           },
@@ -98,14 +108,13 @@ class _LoginState extends State<Login> {
                               child: Text(
                                 'Olvidó su contraseña',
                                 style: TextStyle(
-                                    fontSize: 12, color: Color(0xff6A9426)),
+                                    fontSize: 12,
+                                    color: Color(0xff6A9426),
+                                    fontFamily: "Poppins"),
                               ),
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ForgetPasswordScreen()));
+                                Navigator.of(context)
+                                    .pushNamed('/forgetPassword');
                               },
                             ),
                           ],
@@ -113,20 +122,17 @@ class _LoginState extends State<Login> {
                         SizedBox(
                           height: 50,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ButtonNavigation(
-                              text: "Iniciar sesión",
-                              navigator: () async {
-                                if (!_formKey.currentState.validate()) {
-                                  return;
-                                }
-                                // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
-                                Navigator.of(context).pushNamedAndRemoveUntil('/homeTransactions', (Route<dynamic> route) => false);
-                              },
-                            ),
-                          ],
+                        ButtonNavigation(
+                          text: "Iniciar sesión",
+                          navigator: () async {
+                            if (!_formKeyLogin.currentState.validate()) {
+                              return;
+                            }
+                            // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/homeTransactions',
+                                (Route<dynamic> route) => false);
+                          },
                         ),
                       ],
                     ),
