@@ -41,6 +41,10 @@ import 'package:flutter/material.dart';
     hintColor: Colors.black,
     errorColor: Color( 0xffd32f2f ),
     fontFamily: "PoppinsLight",
+    appBarTheme: AppBarTheme(
+      color: OcoboColors.white,
+      iconTheme: IconThemeData(color: Colors.black)
+    ),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.normal,
       minWidth: 88,

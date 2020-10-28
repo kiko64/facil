@@ -39,6 +39,7 @@ class _OptionFilterState extends State<OptionFilter> {
               children: [
                 Icon(
                   widget.icon,
+                  // size: 10,
                   color: colorText,
                 ),
                 SizedBox(

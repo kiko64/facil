@@ -24,8 +24,7 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
         drawer: Drawer(),
         appBar: AppBar(
           centerTitle: true,
-          // backgroundColor: Colors.white,
-          leading: _isSearching ? _buildleading() : Container(),
+          leading:  _isSearching ? const BackButton()  : null,
           title: _isSearching
               ? _buildSearchField()
               :
@@ -36,11 +35,6 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
                       color: Colors.black, fontSize: 14, fontFamily: "Poppins"),
                 ),
           actions: _buildActions(),
-          bottom: filter
-              ? Filtro()
-              : !filter
-                  ? null
-                  : null,
         ),
         body: ListTransaccion(),
         floatingActionButton: FloatingActionButton(
@@ -48,16 +42,6 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
           child: Icon(Icons.add),
           onPressed: () {},
         ));
-  }
-
-  //Muestra o oculta el filtro
-  showFilter() {
-    if (filter) {
-      filter = false;
-    } else {
-      filter = true;
-    }
-    setState(() {});
   }
 
   // Dibuja el textField
@@ -83,18 +67,16 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
         IconButton(
           icon: const Icon(
             Icons.highlight_off,
-            color: Colors.black,
           ),
           onPressed: () {
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
+                Navigator.pop(context);
               _isSearching = false;
-              showFilter();
               return;
             }
             _isSearching = false;
             _clearSearchQuery();
-            showFilter();
           },
         ),
       ];
@@ -102,37 +84,12 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
 
     return <Widget>[
       IconButton(
-        icon: Icon(Icons.filter_list),
-        color: Colors.black,
+        icon: Icon(Icons.search),
         onPressed: () {
           _startSearch();
-          showFilter();
         },
       )
     ];
-  }
-
-  //Valida el leading
-  _buildleading() {
-    if (_isSearching) {
-      return IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black,
-        ),
-        onPressed: () {
-          if (_searchQueryController == null ||
-              _searchQueryController.text.isEmpty) {
-            _isSearching = false;
-            showFilter();
-            return;
-          }
-          _isSearching = false;
-          _clearSearchQuery();
-          showFilter();
-        },
-      );
-    }
   }
 
   void _startSearch() {

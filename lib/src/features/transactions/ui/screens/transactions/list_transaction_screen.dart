@@ -1,4 +1,5 @@
 import 'package:facilapp/src/features/transactions/models/transaccion.dart';
+import 'package:facilapp/src/features/transactions/ui/widgets/filter_widget.dart';
 import 'package:facilapp/src/features/transactions/ui/widgets/transaccion_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,7 @@ class _ListTransaccionState extends State<ListTransaccion> {
     return ListView(
       
       children: [
+        Filtro(),
         TransaccionWidget(transaccion: transaccion1,icon: Icons.pan_tool,),
         TransaccionWidget(transaccion: transaccion2,icon:Icons.check),
         TransaccionWidget(transaccion: transaccion3,icon:Icons.verified)
