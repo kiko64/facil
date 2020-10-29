@@ -43,7 +43,8 @@ import 'package:flutter/material.dart';
     fontFamily: "PoppinsLight",
     appBarTheme: AppBarTheme(
       color: OcoboColors.white,
-      iconTheme: IconThemeData(color: Colors.black)
+      iconTheme: IconThemeData(color: Colors.black),
+      textTheme: TextTheme(title: TextStyle(color: Colors.black, fontFamily: "Poppins", fontSize: 14))
     ),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.normal,
@@ -191,7 +192,7 @@ import 'package:flutter/material.dart';
       fontStyle: FontStyle.normal,
     ),
       title: TextStyle(
-      color: Color( 0xffffffff ),
+      color: Colors.black,
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
@@ -223,7 +224,6 @@ import 'package:flutter/material.dart';
       button: TextStyle(
       color: OcoboColors.white,
       fontSize: 20,
-      // fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
       fontFamily: "Poppins"
     ),

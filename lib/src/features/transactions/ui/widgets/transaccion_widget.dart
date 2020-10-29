@@ -18,13 +18,14 @@ class TransaccionWidget extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(right: 20),
-                width: 80,
-                height: 100,
+                width: 70,
+                height: 70,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(
-                      image: NetworkImage(transaccion.imagen),
-                      fit: BoxFit.cover),
+                    image: AssetImage('assets/icons/${transaccion.imagen}'),
+                      // image: NetworkImage(transaccion.imagen),
+                      fit: BoxFit.contain),
                 ),
                 // child: Image.network(transaccion.imagen),
               ),
@@ -37,14 +38,14 @@ class TransaccionWidget extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(icon),
+                      // Icon(icon),
                       Text(
                         transaccion.fecha,
-                        style:
-                            TextStyle(fontSize: 12, fontFamily: "PoppinsLight"),
+                        style: TextStyle(color: Color(0xff9F9F9F)),
                       )
                     ],
                   ),
+                  Text('${transaccion.auxiliar} (\$${transaccion.precio})')
                 ],
               ),
             ],

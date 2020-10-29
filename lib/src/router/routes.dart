@@ -4,6 +4,7 @@ import 'package:facilapp/src/features/transactions/ui/screens/login_screen.dart'
 import 'package:facilapp/src/features/transactions/ui/screens/register_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/screens/splash_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/screens/transactions/home_transactions_screen.dart';
+import 'package:facilapp/src/features/transactions/ui/screens/transactions/register_transaction_screen.dart';
 import 'package:flutter/material.dart';
 
 Map<String, WidgetBuilder> routes () {
@@ -14,6 +15,6 @@ Map<String, WidgetBuilder> routes () {
   '/login': (BuildContext context) => Login(),
   '/registerUser' : (BuildContext context) => RegisterScreen(),
   '/forgetPassword' : (BuildContext context) => ForgetPasswordScreen(),
-
+  '/registerTransaction' : (BuildContext context) => RegisterTransaction(),
   };
 }

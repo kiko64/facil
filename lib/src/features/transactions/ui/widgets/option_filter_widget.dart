@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 class OptionFilter extends StatefulWidget {
   String option;
-  IconData icon;
+  String icon;
   OptionFilter({@required this.option, @required this.icon});
   @override
   _OptionFilterState createState() => _OptionFilterState();
 }
 
 class _OptionFilterState extends State<OptionFilter> {
-  
   Color color;
   bool selected;
   Color colorText;
@@ -35,16 +34,18 @@ class _OptionFilterState extends State<OptionFilter> {
             padding: EdgeInsets.all(5),
             width: 110,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  widget.icon,
-                  // size: 10,
-                  color: colorText,
+                ColorFiltered(
+                  child: Container(
+                      margin: EdgeInsets.only(right: 12),
+                      width: 20,
+                      height: 20,
+                      child: widget.icon != null ? Image.asset('assets/icons/${widget.icon}') : null),
+                  colorFilter: ColorFilter.mode(colorText, BlendMode.srcIn),
                 ),
-                SizedBox(
-                  width: 1,
-                ),
+                // Container(margin: EdgeInsets.only(right: 12), width: 20, child: Image.asset('assets/loading.png')),
                 Text(widget.option,
                     style: TextStyle(
                         fontSize: 10, color: colorText, fontFamily: "Poppins")),

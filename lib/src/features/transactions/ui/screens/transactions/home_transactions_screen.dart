@@ -1,5 +1,4 @@
 import 'package:facilapp/src/features/transactions/ui/screens/transactions/list_transaction_screen.dart';
-import 'package:facilapp/src/features/transactions/ui/widgets/filter_widget.dart';
 import 'package:flutter/material.dart';
 
 class TransaccionScreen extends StatefulWidget {
@@ -24,15 +23,13 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
         drawer: Drawer(),
         appBar: AppBar(
           centerTitle: true,
-          leading:  _isSearching ? const BackButton()  : null,
+          leading: _isSearching ? const BackButton() : null,
           title: _isSearching
               ? _buildSearchField()
               :
               // title:
               Text(
                   'Transacciones',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: 14, fontFamily: "Poppins"),
                 ),
           actions: _buildActions(),
         ),
@@ -40,7 +37,9 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
         floatingActionButton: FloatingActionButton(
           // backgroundColor: Color(0xff6A9426),
           child: Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed('/registerTransaction');
+          },
         ));
   }
 
@@ -71,7 +70,7 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
           onPressed: () {
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
-                Navigator.pop(context);
+              Navigator.pop(context);
               _isSearching = false;
               return;
             }

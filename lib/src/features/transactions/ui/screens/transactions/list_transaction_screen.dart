@@ -10,30 +10,38 @@ class ListTransaccion extends StatefulWidget {
 
 class _ListTransaccionState extends State<ListTransaccion> {
   var transaccion1 = Transaccion(
-      imagen:
-          'https://us.123rf.com/450wm/iconicbestiary/iconicbestiary1612/iconicbestiary161200811/67658259-libro-o-libro-mayor-de-contabilidad-mesas-abiertas-con-calculadora-y-l%C3%A1piz-ilustraci%C3%B3n-vectorial-de-estil.jpg?ver=6',
-      actividad: 'Tipo de Actividad',
-      fecha: 'Fecha');
+      imagen: 'open-hands.png',
+      actividad: 'Servicio público',
+      fecha: '21-OCT-2020 5:30 P.M',
+      auxiliar: 'Alcanos',
+      precio: '12860');
   var transaccion2 = Transaccion(
-      imagen:
-          'https://thumbs.dreamstime.com/b/iconos-planos-que-consideran-calculadora-con-el-cuaderno-y-l%C3%A1piz-aislados-en-fondo-blanco-ilustraci%C3%B3n-del-vector-140144314.jpg',
-      actividad: 'Tipo de Actividad',
-      fecha: 'Fecha');
-  var transaccion3 = Transaccion(
-      imagen:
-          'https://media.istockphoto.com/vectors/paper-notebook-with-pencil-and-calculator-tools-vector-id670262900',
-      actividad: 'Tipo de Actividad',
-      fecha: '01/10/2020');
+      imagen: 'aprobado.png',
+      actividad: 'Servicio público',
+      fecha: '30-SEP-2020 2:00 P.M',
+      auxiliar: 'Celsia',
+      precio: '42860');
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      
+    return Column(
       children: [
-        Filtro(),
-        TransaccionWidget(transaccion: transaccion1,icon: Icons.pan_tool,),
-        TransaccionWidget(transaccion: transaccion2,icon:Icons.check),
-        TransaccionWidget(transaccion: transaccion3,icon:Icons.verified)
+        Stack(
+          children: [
+            Filtro(),
+          ],
+        ),
+        Expanded(
+          child: ListView(
+            children: [
+              TransaccionWidget(
+                transaccion: transaccion1,
+                icon: Icons.pan_tool,
+              ),
+              TransaccionWidget(transaccion: transaccion2, icon: Icons.check),
+            ],
+          ),
+        )
       ],
     );
   }
