@@ -1,8 +1,7 @@
-import 'package:facilapp/src/features/transactions/ui/screens/login_screen.dart';
-import 'package:facilapp/src/features/transactions/ui/screens/register_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/widgets/button_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:facilapp/src/router/router_path.dart' as routes;
 
 class Home extends StatefulWidget {
   @override
@@ -58,13 +57,13 @@ class _HomeState extends State<Home> {
                         ButtonNavigation(
                           text: "Iniciar Sesión",
                           navigator: () {
-                            Navigator.of(context).pushNamed('/login');
+                            Navigator.pushNamed(context, routes.LoginPageRoute);
                           },
                         ),
                         ButtonNavigation(
                           text: "Registrate",
                           navigator: () {
-                            Navigator.of(context).pushNamed('/registerUser');
+                            Navigator.pushNamed(context, routes.RegisterUserPageRoute);
                           },
                         ),
                       ],

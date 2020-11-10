@@ -1,7 +1,7 @@
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:facilapp/src/features/transactions/ui/widgets/appbar_ocobo_widget.dart';
 import 'package:facilapp/src/features/transactions/ui/widgets/button_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:facilapp/src/router/router_path.dart' as routes;
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -18,13 +18,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _iconPassword;
   bool _colorPassword;
 
+  //Lista para el select de empresa
+  List<DropdownMenuItem<String>> listCompany = [
+    DropdownMenuItem(
+        child: Text(
+          "OcoboSoft",
+        ),
+        value: "OcoboSoft"),
+    DropdownMenuItem(
+        child: Text(
+          'Ibacrea SAS',
+        ),
+        value: 'Ibacrea SAS'),
+  ];
+
+  //Lista para el select de empresa
+  List<DropdownMenuItem<String>> listRole = [
+    DropdownMenuItem(
+        child: Text(
+          "Contador",
+        ),
+        value: "Contador"),
+    DropdownMenuItem(
+        child: Text(
+          'Usuario',
+        ),
+        value: 'Usuario'),
+  ];
+
   @override
   void initState() {
     super.initState();
     _colorPassword = false;
     _iconPassword = true;
-    _company = '';
-    _role = '';
   }
 
   @override
@@ -33,7 +59,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         appBar: AppbarOcobo(
           textAction: 'Iniciar Sesión',
           navigator: () {
-            Navigator.of(context).pushNamed('/login');
+            Navigator.pushNamed(context, routes.LoginPageRoute);
+            // Navigator.of(context).pushNamed('/login');
           },
         ),
         body: Form(
@@ -50,7 +77,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   TextFormField(
                     controller: _name,
-                    cursorColor: Color(0xff6A9426),
                     decoration: InputDecoration(
                       labelText: 'Nombre Completo',
                     ),
@@ -63,7 +89,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   TextFormField(
                     controller: _correo,
-                    cursorColor: Color(0xff6A9426),
                     decoration: InputDecoration(
                       labelText: 'Correo',
                     ),
@@ -105,70 +130,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                   ),
-                  DropDownFormField(
-                    filled: false,
-                    titleText: 'Empresa',
-                    hintText: '',
+                  DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Empresa',
+                    ),
+                    items: listCompany,
                     value: _company,
-                    onSaved: (value) {
-                      setState(() {
-                        _company = value;
-                      });
-                    },
                     onChanged: (value) {
                       setState(() {
                         _company = value;
                       });
                     },
-                    dataSource: [
-                      {
-                        "display": "OcoboSoft",
-                        "value": "OcoboSoft",
-                      },
-                      {
-                        "display": "Ibacrea SAS",
-                        "value": "Ibacrea SAS",
-                      },
-                    ],
-                    textField: 'display',
-                    valueField: 'value',
                     validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Seleccione una opción';
+                      if (_company.isEmpty) {
+                        return 'Debe Seleccionar';
                       }
                       return null;
                     },
                   ),
-                  DropDownFormField(
-                    filled: false,
-                    titleText: 'Rol',
-                    hintText: '',
+                  DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Rol',
+                    ),
+                    items: listRole,
                     value: _role,
-                    onSaved: (value) {
-                      setState(() {
-                        _role = value;
-                      });
-                    },
                     onChanged: (value) {
                       setState(() {
                         _role = value;
                       });
                     },
-                    dataSource: [
-                      {
-                        "display": "Contador",
-                        "value": "Contador",
-                      },
-                      {
-                        "display": "Cliente",
-                        "value": "Cliente",
-                      },
-                    ],
-                    textField: 'display',
-                    valueField: 'value',
                     validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Seleccione una opción';
+                      if (_role.isEmpty) {
+                        return 'Debe Seleccionar';
                       }
                       return null;
                     },
@@ -184,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                       // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/homeTransactions', (Route<dynamic> route) => false);
+                          routes.HomeTransactionsPageRoute, (Route<dynamic> route) => false);
                     },
                   )
                 ],

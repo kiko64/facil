@@ -1,11 +1,9 @@
 import 'package:facilapp/pos/presentation/book/pages/list_books.dart';
-import 'package:facilapp/src/features/transactions/ui/screens/forget_password_screen.dart';
-import 'package:facilapp/src/features/transactions/ui/screens/register_screen.dart';
-import 'package:facilapp/src/features/transactions/ui/screens/transactions/home_transactions_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/widgets/appbar_ocobo_widget.dart';
 import 'package:facilapp/src/features/transactions/ui/widgets/button_navigation.dart';
 import 'package:facilapp/src/styles/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:facilapp/src/router/router_path.dart' as routes;
 
 class Login extends StatefulWidget {
   @override
@@ -33,7 +31,8 @@ class _LoginState extends State<Login> {
         appBar: AppbarOcobo(
           textAction: 'Registrarse',
           navigator: () {
-            Navigator.of(context).pushNamed('/registerUser');
+            Navigator.pushNamed(context, routes.RegisterUserPageRoute);
+            // Navigator.of(context).pushNamed('/registerUser');
           },
         ),
         body: _logueado
@@ -129,8 +128,9 @@ class _LoginState extends State<Login> {
                               return;
                             }
                             // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
+                            Navigator.pushNamed(context, routes.LoginPageRoute);
                             Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/homeTransactions',
+                                routes.HomeTransactionsPageRoute,
                                 (Route<dynamic> route) => false);
                           },
                         ),

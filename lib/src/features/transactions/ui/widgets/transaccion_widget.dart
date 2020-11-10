@@ -17,9 +17,9 @@ class TransaccionWidget extends StatelessWidget {
           Row(
             children: [
               Container(
-                margin: EdgeInsets.only(right: 20),
-                width: 70,
-                height: 70,
+                margin: EdgeInsets.only(right: 30, left: 10),
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(

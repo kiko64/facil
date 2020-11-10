@@ -1,0 +1,9 @@
+const String SplashRoute = 'splash';
+const String LoginPageRoute = 'login';
+const String HomePageRoute = 'home';
+const String HomeTransactionsPageRoute = 'homeTransactions';
+const String HomeVochersPageRoute = 'homeVouchers';
+const String MovementsPageRoute = 'movements';
+const String RegisterUserPageRoute = 'registerUser';
+const String ForgetPasswordPageRoute = 'forgetPassword';
+const String RegisterTransactionPageRoute = 'registerTransaction';
