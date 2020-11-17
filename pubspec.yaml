@@ -36,13 +36,14 @@ dependencies:
   fluttertoast: ^3.0.3
   intl: ^0.16.1
   get_it: ^3.0.3
-  bloc: ^6.0.3
+  bloc: ^6.1.0
   flutter_bloc: ^6.0.5
   flutter_datetime_picker: ^1.4.0
   loading_overlay: ^0.2.1
   splashscreen: ^1.2.0
   image_picker: ^0.6.7+12
   carousel_slider: ^2.3.1
+  loading: ^1.0.2
 
   # camera:
   # path_provider:

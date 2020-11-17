@@ -1,4 +1,5 @@
 const String SplashRoute = 'splash';
+const String SplashInfoRoute = 'splashInfo';
 const String LoginPageRoute = 'login';
 const String HomePageRoute = 'home';
 const String HomeTransactionsPageRoute = 'homeTransactions';

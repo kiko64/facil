@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:facilapp/src/config/globals.dart' as globals;
 
 class OptionFilter extends StatefulWidget {
   String option;
   String icon;
-  OptionFilter({@required this.option, @required this.icon});
+  int status;
+  OptionFilter(
+      {@required this.option, @required this.icon, @required this.status});
   @override
   _OptionFilterState createState() => _OptionFilterState();
 }
@@ -16,9 +19,16 @@ class _OptionFilterState extends State<OptionFilter> {
   @override
   void initState() {
     super.initState();
+    print(globals.selected);
     color = null;
     colorText = Colors.black;
     selected = false;
+    if (widget.status == globals.selected) {
+      seletedButton();
+    }
+    // if (widget.status != globals.selected) {
+    //   seletedButton();
+    // }
   }
 
   @override
@@ -42,7 +52,9 @@ class _OptionFilterState extends State<OptionFilter> {
                       margin: EdgeInsets.only(right: 12),
                       width: 20,
                       height: 20,
-                      child: widget.icon != null ? Image.asset('assets/icons/${widget.icon}') : null),
+                      child: widget.icon != null
+                          ? Image.asset('assets/icons/${widget.icon}')
+                          : null),
                   colorFilter: ColorFilter.mode(colorText, BlendMode.srcIn),
                 ),
                 // Container(margin: EdgeInsets.only(right: 12), width: 20, child: Image.asset('assets/loading.png')),
@@ -68,6 +80,7 @@ class _OptionFilterState extends State<OptionFilter> {
       color = null;
       colorText = Colors.black;
     }
+    globals.selected = widget.status;
     setState(() {});
   }
 }

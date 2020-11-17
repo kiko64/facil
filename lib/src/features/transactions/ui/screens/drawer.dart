@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:facilapp/src/router/router_path.dart' as routes;
 
 class DrawerOcobo extends StatelessWidget {
+  String selected;
+  DrawerOcobo({this.selected});
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size.height * 0.3;
@@ -26,15 +28,29 @@ class DrawerOcobo extends StatelessWidget {
                   // image: DecorationImage(image: NetworkImage(''))
                 ),
                 child: Align(
-                    alignment: Alignment(0, 0), child: Text('Logo Cliente')),
+                    alignment: Alignment(0, 0),
+                    child: Text('Logo Cliente',
+                        style: TextStyle(
+                            fontFamily: "Poppins", color: Colors.white))),
               ),
-              Text('Nombre de Usuario'),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                'Nombre de Usuario',
+                style: TextStyle(fontFamily: "Poppins"),
+              ),
               Text('correo@gmail.com'),
             ],
           )),
           ListTile(
             leading: Icon(Icons.monetization_on_outlined),
-            title: Text('Transacciones'),
+            title: Text(
+              'Transacciones',
+              // style: TextStyle(color: Colors.white),
+            ),
+            selected: true,
+            // selectedTileColor: OcoboColors.primaryColor,
             onTap: () {
               Navigator.pushNamed(context, routes.HomeTransactionsPageRoute);
 

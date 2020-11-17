@@ -22,7 +22,7 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
     return Scaffold(
         drawer: DrawerOcobo(),
         appBar: AppbarSearch(title: 'Transacciones',),
-        body: ListTransaccion(),
+        body: ListTransactionScreen(),
         floatingActionButton: FloatingActionButton(
           // backgroundColor: Color(0xff6A9426),
           child: Icon(Icons.add),

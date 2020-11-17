@@ -112,8 +112,7 @@ class _LoginState extends State<Login> {
                                     fontFamily: "Poppins"),
                               ),
                               onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed('/forgetPassword');
+                                Navigator.pushNamed(context, routes.ForgetPasswordPageRoute);
                               },
                             ),
                           ],

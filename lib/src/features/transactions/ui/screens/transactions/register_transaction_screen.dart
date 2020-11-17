@@ -125,12 +125,12 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                   decoration: InputDecoration(
                       hintText: 'Actividad,valor,auxiliar',
                       hintStyle: TextStyle(color: Colors.grey.shade500),
-                      prefixIcon: Icon(Icons.search)),
+                      prefixIcon: Icon(Icons.search, color: Colors.black,)),
                 ),
                 DropdownButtonFormField(
                   decoration: InputDecoration(
                     labelText: 'Actividad',
-                    prefixIcon: Icon(Icons.list_alt),
+                    prefixIcon: Icon(Icons.list_alt, color: Colors.black),
                   ),
                   items: listActivity,
                   value: _activity,
@@ -140,18 +140,18 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                     });
                   },
                   validator: (value) {
-                      if (_activity.isEmpty) {
-                        return 'Debe Seleccionar';
-                      }
-                      return null;
-                    },
+                    if (_activity.isEmpty) {
+                      return 'Debe Seleccionar';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _value,
                   decoration: InputDecoration(
                     labelText: 'Valor',
-                    prefixIcon: Icon(Icons.attach_money_outlined),
+                    prefixIcon: Icon(Icons.attach_money_outlined, color: Colors.black),
                   ),
                   validator: (value) {
                     if (value.isEmpty) {
@@ -163,7 +163,7 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                 DropdownButtonFormField(
                   decoration: InputDecoration(
                       labelText: 'Auxiliar',
-                      prefixIcon: Icon(Icons.perm_identity)),
+                      prefixIcon: Icon(Icons.perm_identity, color: Colors.black)),
                   items: listAuxiliary,
                   value: _auxiliary,
                   onChanged: (value) {
@@ -172,16 +172,16 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                     });
                   },
                   validator: (value) {
-                      if (_auxiliary.isEmpty) {
-                        return 'Debe Seleccionar';
-                      }
-                      return null;
-                    },
+                    if (_auxiliary.isEmpty) {
+                      return 'Debe Seleccionar';
+                    }
+                    return null;
+                  },
                 ),
                 DropdownButtonFormField(
                   decoration: InputDecoration(
                     labelText: 'Cuenta',
-                    prefixIcon: Icon(Icons.account_balance_outlined),
+                    prefixIcon: Icon(Icons.account_balance_outlined, color: Colors.black),
                   ),
                   items: listAccount,
                   value: _account,
@@ -191,17 +191,17 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                     });
                   },
                   validator: (value) {
-                      if (_account.isEmpty) {
-                        return 'Debe Seleccionar';
-                      }
-                      return null;
-                    },
+                    if (_account.isEmpty) {
+                      return 'Debe Seleccionar';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   controller: _observation,
                   decoration: InputDecoration(
                     labelText: 'Observación',
-                    prefixIcon: Icon(Icons.rate_review_outlined),
+                    prefixIcon: Icon(Icons.rate_review_outlined, color: Colors.black),
                   ),
                 ),
                 Center(heightFactor: 1.5, child: Text('Soportes')),
@@ -289,13 +289,18 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
             heroTag: 2,
             child: Icon(Icons.save_outlined),
             onPressed: () async {
-              if (!_formRegisterTransaction.currentState.validate() || _images.length == 0) {
+              if (!_formRegisterTransaction.currentState.validate() ||
+                  _images.length == 0) {
                 return;
               }
               // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
-                // Navigator.of(context).pushNamed('/homeTransactions');
-                Navigator.pushNamed(context, routes.HomeTransactionsPageRoute);
-
+              // Navigator.of(context).pushNamed('/homeTransactions');
+              Navigator.pushNamed(context, routes.SplashInfoRoute, arguments: {
+                'navigator': routes.HomeTransactionsPageRoute,
+                'color': OcoboColors.primaryColor,
+                'icon': Icons.thumb_up,
+                'text': '¡Transacción almacenada con éxito!'
+              });
             },
           ),
         ],

@@ -10,9 +10,8 @@ class ForgetPasswordScreen extends StatelessWidget {
       children: [
         AppbarOcobo(),
         Container(
-          padding: EdgeInsets.only(
-            left: 45,
-            right: 45,
+          padding: EdgeInsets.all(
+            30
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +21,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 style: TextStyle(fontFamily: "Poppins", fontSize: 40),
               ),
               SizedBox(
-                height: 40,
+                height: 60,
               ),
               Theme(
                 data: new ThemeData(

@@ -1,4 +1,5 @@
 import 'package:facilapp/src/features/transactions/ui/screens/home_screen.dart';
+import 'package:facilapp/src/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -28,7 +29,7 @@ class _SplashOcoboState extends State<SplashOcobo> {
       image: Image.asset('assets/ocoboSoft.png'),
       styleTextUnderTheLoader: new TextStyle(),
       photoSize: 100.0,
-      // loaderColor: Color(0xff6A9426),
+      // loaderColor: OcoboColors.blueBox,
     ); 
   }
 }
