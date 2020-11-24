@@ -77,13 +77,13 @@ class ListTransactionScreenState extends State<_ListTransactionScreen> {
                   itemCount: _listTransaction.length,
                   itemBuilder: (context, index) {
                     //Revisar posible error
-                    // if (loadingData) {
-                    //   if (index == _listTransaction.length - 1) {
-                    //     return Center(
-                    //         heightFactor: 1.5,
-                    //         child: CircularProgressIndicator());
-                    //   }
-                    // }
+                    if (loadingData) {
+                      if (index == _listTransaction.length - 1) {
+                        return Center(
+                            heightFactor: 1.5,
+                            child: CircularProgressIndicator());
+                      }
+                    }
                     return TransactionWidgetScreen(
                       transaction: _listTransaction[index],
                     );

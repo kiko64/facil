@@ -7,15 +7,20 @@ const URL_BASE =
     "http://multimodulolibrerias-env.eba-mfxm2vgp.us-west-2.elasticbeanstalk.com/api/v1/registros";
 
 class VoucherRepository {
-  Future<List<Voucher>> getAllVoucher(
+  Future<List<dynamic>> getAllVoucher(
       {String registros, int offset, int limit}) async {
     var url = URL_BASE +
         '?offset=$offset&limit=$limit${registros != null ? '&registro=$registros' : ''}';
     var response = await http.get(url);
     Map<String, dynamic> responseData = json.decode(response.body);
     List voucherJson = responseData["data"].toList();
+    int total = responseData["total"];
     List<Voucher> vouchers =
         voucherJson.map((voucherJson) => Voucher.fromMap(voucherJson)).toList();
-    return vouchers;
+    List list = [
+      vouchers,
+      total
+    ];
+    return list;
   }
 }

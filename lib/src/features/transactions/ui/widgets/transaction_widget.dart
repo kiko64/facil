@@ -73,7 +73,8 @@ class _TransactionWidgetState extends State<TransactionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    switch (widget.transaction.status) {
+  var status = widget.transaction.status;
+    switch (status) {
       case 12601:
         icon = "preparacion.png";
         break;
@@ -116,7 +117,7 @@ class _TransactionWidgetState extends State<TransactionWidget> {
         }
       }
       return GestureDetector(
-        onHorizontalDragEnd: widget.transaction.status == 12601
+        onHorizontalDragEnd: status == 12601
             ? (details) {
                 if (cancelar) {
                   cancelar = false;
@@ -142,10 +143,8 @@ class _TransactionWidgetState extends State<TransactionWidget> {
                       borderRadius: BorderRadius.circular(5),
                       image: DecorationImage(
                           image: AssetImage('assets/icons/$icon'),
-                          // image: NetworkImage(transaction.imagen),
                           fit: BoxFit.contain),
                     ),
-                    // child: Image.network(transaction.imagen),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,10 +180,10 @@ class _TransactionWidgetState extends State<TransactionWidget> {
             ],
           ),
         ),
-        onTap:  () {
+        onTap: status == 12604 ? () {
           Navigator.pushNamed(context, routes.HomeVochersPageRoute,
               arguments: widget.transaction.vouchers);
-        },
+        }: null,
       );
     });
   }

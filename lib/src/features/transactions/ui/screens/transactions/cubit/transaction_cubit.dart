@@ -15,12 +15,19 @@ class TransactionCubit extends Cubit<TransactionState> {
 
   void getAll({final name = "", offset}) async {
     // emit(TransactionLoading());
-    List<Transaction> _transactions = await _transactionRepository
-        .getAllTransactions(name: name, offset: offset, limit: limit);
+    List<dynamic> response = await _transactionRepository.getAllTransactions(
+        name: name, offset: offset, limit: limit);
+    List<Transaction> _transactions = response[0];
+    int total = response[1];
     final loadingData =
-        _transactions.length == 0 && _transactions.length < limit ? false : true;
+        _transactions.length == 0 && _transactions.length < limit || _transactions.length == total
+            ? false
+            : true;
 
-    emit(GetAllTransactions(listTransactions: _transactions, offset: offset, loadingData: loadingData));
+    emit(GetAllTransactions(
+        listTransactions: _transactions,
+        offset: offset,
+        loadingData: loadingData));
   }
 
   void cancelTransaction({final id, status}) async {
