@@ -19,7 +19,6 @@ class _OptionFilterState extends State<OptionFilter> {
   @override
   void initState() {
     super.initState();
-    print(globals.selected);
     color = null;
     colorText = Colors.black;
     selected = false;

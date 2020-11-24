@@ -10,13 +10,13 @@ class VoucherWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only( top: 10.0),
       child: ListTile(
-        title: Text('Comprobante contable ${voucher.number}',
+        title: Text('Comprobante contable ${voucher.id}',
             style: TextStyle(fontSize: 12, fontFamily: "Poppins")),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(voucher.datetime, style: TextStyle(fontSize: 12)),
-            Text('${voucher.auxiliary}(\$${voucher.value})', style: TextStyle(fontSize: 12)),
+            Text(voucher.date, style: TextStyle(fontSize: 12)),
+            Text('${voucher.auxiliary}(${voucher.value})', style: TextStyle(fontSize: 12)),
           ],
         ),
         trailing: Row(

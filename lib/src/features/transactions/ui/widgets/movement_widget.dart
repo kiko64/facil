@@ -14,14 +14,15 @@ class MovementWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Descripción: ${movement.description}', style: TextStyle(fontSize: 12)),
-            Text('Nombre: ${movement.name}', style: TextStyle(fontSize: 12)),
+            Text('Nombre: ${movement.auxiliary}', style: TextStyle(fontSize: 12)),
             Row(
-              mainAxisSize: MainAxisSize.min,
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Debito: ${movement.debit}', style: TextStyle(fontSize: 12)),
-                SizedBox(
-                  width: 190,
-                ),
+                // SizedBox(
+                //   width: screenwidth,
+                // ),
                 Text('Credito: ${movement.credit}', style: TextStyle(fontSize: 12)),
               ],
             )

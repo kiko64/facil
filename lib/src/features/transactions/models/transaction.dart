@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Transaction {
   final int id;
   final int status;
@@ -5,6 +7,7 @@ class Transaction {
   final String date;
   final String auxiliary;
   final String value;
+  final String vouchers;
 
   Transaction({
     this.id,
@@ -13,6 +16,7 @@ class Transaction {
     this.date,
     this.auxiliary,
     this.value,
+    this.vouchers
   });
   factory Transaction.fromMap(Map map) {
     return Transaction(
@@ -21,7 +25,8 @@ class Transaction {
         activity: map['gAgenda']['descripcion'],
         date: map['fecha'],
         auxiliary: map['nombre'],
-        value: map['valor']);
+        value: NumberFormat.simpleCurrency().format(double.parse(map['valor'])),
+        vouchers: map['registro']);
   }
 
   // Map<String, dynamic> toMap() {

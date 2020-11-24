@@ -7,7 +7,7 @@ import 'package:facilapp/src/features/transactions/ui/screens/splash_screen.dart
 import 'package:facilapp/src/features/transactions/ui/screens/transactions/home_transactions_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/screens/transactions/register_transaction_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/screens/vouchers/home_voucher_screen.dart';
-import 'package:facilapp/src/features/transactions/ui/screens/vouchers/movements_screen.dart';
+import 'package:facilapp/src/features/transactions/ui/screens/movements/movements_screen.dart';
 import 'package:facilapp/src/router/router_path.dart' as routes;
 import 'package:flutter/material.dart';
 
@@ -47,7 +47,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.HomeTransactionsPageRoute:
       return MaterialPageRoute(builder: (context) => TransaccionScreen());
     case routes.HomeVochersPageRoute:
-      return MaterialPageRoute(builder: (context) => VoucherScreen());
+      final argument = settings.arguments;
+      return MaterialPageRoute(builder: (context) => VoucherScreen(vouchers: argument,));
     case routes.MovementsPageRoute:
       final argument = settings.arguments;
       return MaterialPageRoute(builder: (context) => MovementScreen(voucher: argument,));
