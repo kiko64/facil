@@ -8,10 +8,6 @@ class Filtro extends StatelessWidget implements PreferredSizeWidget{
       padding: const EdgeInsets.only(top:20.0),
       child: Wrap(
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(9.0),
-          //   child: Text('Filtrar por estados',style:TextStyle(fontSize: 12, fontFamily: "Poppins")),
-          // ),
           OptionFilter(option: 'Todos', icon: null, status: 12600,),
           OptionFilter(option: 'Preparación', icon: 'preparacion.png', status: 12601,),
           OptionFilter(option: 'Aprobada', icon: 'aprobado.png', status: 12602,),

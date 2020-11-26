@@ -1,3 +1,4 @@
+import 'package:facilapp/src/features/transactions/models/transaction.dart';
 import 'package:facilapp/src/features/transactions/ui/screens/forget_password_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/screens/home_screen.dart';
 import 'package:facilapp/src/features/transactions/ui/screens/login_screen.dart';
@@ -57,7 +58,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.ForgetPasswordPageRoute:
       return MaterialPageRoute(builder: (context) => ForgetPasswordScreen());
     case routes.RegisterTransactionPageRoute:
-      return MaterialPageRoute(builder: (context) => RegisterTransaction());
+      final argument = settings.arguments;
+      return MaterialPageRoute(builder: (context) => RegisterTransactionScreen(transaction: argument,));
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

@@ -73,7 +73,7 @@ class _TransactionWidgetState extends State<TransactionWidget> {
 
   @override
   Widget build(BuildContext context) {
-  var status = widget.transaction.status;
+    var status = widget.transaction.status;
     switch (status) {
       case 12601:
         icon = "preparacion.png";
@@ -173,17 +173,25 @@ class _TransactionWidgetState extends State<TransactionWidget> {
                     ? Icon(Icons.highlight_off, color: Colors.red)
                     : Icon(Icons.arrow_forward_ios),
                 onPressed: () {
-                  cancelar ? cancelTransaction() : showSupports();
+                  cancelar
+                      ? cancelTransaction()
+                      : status == 12601
+                          ? Navigator.pushNamed(
+                              context, routes.RegisterTransactionPageRoute,
+                              arguments: widget.transaction)
+                          : showSupports();
                 },
               )
               // Icon(Icons.arrow_forward_ios)
             ],
           ),
         ),
-        onTap: status == 12604 ? () {
-          Navigator.pushNamed(context, routes.HomeVochersPageRoute,
-              arguments: widget.transaction.vouchers);
-        }: null,
+        onTap: status == 12604
+            ? () {
+                Navigator.pushNamed(context, routes.HomeVochersPageRoute,
+                    arguments: widget.transaction.vouchers);
+              }
+            : null,
       );
     });
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:facilapp/src/config/globals.dart' as globals;
+import 'package:facilapp/src/router/router_path.dart' as routes;
 
 class OptionFilter extends StatefulWidget {
   String option;
@@ -67,6 +68,9 @@ class _OptionFilterState extends State<OptionFilter> {
       ),
       onTap: () {
         seletedButton();
+        globals.selected = widget.status;
+        // print(globals.selected);
+        Navigator.pushNamed(context, routes.HomeTransactionsPageRoute);
       },
     );
   }

@@ -56,9 +56,9 @@ class ListTransactionScreenState extends State<_ListTransactionScreen> {
     return WillPopScope(
       child: BlocBuilder<TransactionCubit, TransactionState>(
         builder: (context, state) {
-          // if (state is TransactionLoading) {
-          //   return Center(child: CircularProgressIndicator());
-          // }
+          if (state is TransactionLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
           if (state is GetAllTransactions) {
             offset = state.offset;
             loadingData = state.loadingData;
