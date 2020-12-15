@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppbarOcobo extends StatelessWidget implements PreferredSizeWidget {
-  String textAction;
-  VoidCallback navigator;
+  final String textAction;
+  final VoidCallback navigator;
   AppbarOcobo({this.textAction,this.navigator});
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,10 @@ class AppbarOcobo extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ],
             ),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: navigator,
+            // onTap: () {
+            //   Navigator.pop(context);
+            // },
           ),
           textAction != null ? GestureDetector(
             child: Text(textAction,

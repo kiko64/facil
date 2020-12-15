@@ -60,12 +60,12 @@ class _HomeState extends State<Home> {
                             Navigator.pushNamed(context, routes.LoginPageRoute);
                           },
                         ),
-                        ButtonNavigation(
-                          text: "Registrate",
-                          navigator: () {
-                            Navigator.pushNamed(context, routes.RegisterUserPageRoute);
-                          },
-                        ),
+                        // ButtonNavigation(
+                        //   text: "Registrate",
+                        //   navigator: () {
+                        //     Navigator.pushNamed(context, routes.RegisterUserPageRoute);
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

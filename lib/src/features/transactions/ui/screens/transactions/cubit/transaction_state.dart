@@ -25,7 +25,7 @@ class GetAllTransactions extends TransactionState {
 
   @override
   String toString() =>
-      'List Books { posts: ${listTransactions.toString()}, offset: $offset, loadingData: $loadingData}';
+      'List Transactions { posts: ${listTransactions.toString()}, offset: $offset, loadingData: $loadingData}';
 }
 
 class CancelTransaction extends TransactionState {
@@ -42,14 +42,21 @@ class UpdateTransaction extends TransactionState {
   UpdateTransaction({this.success = false, this.error});
 }
 
-class RegisterTransaction extends TransactionState {
+class RegisteredTransaction extends TransactionState {
   final String error;
   final bool success;
+  final String id;
 
-  RegisterTransaction(this.error, this.success);
+  RegisteredTransaction({this.success = false, this.error, this.id});
 }
 
-class GetActivities extends TransactionState{
+class RegisteredImagesTransaction extends TransactionState {
+  final String error;
+  final bool success;
+  RegisteredImagesTransaction({this.success = false, this.error});
+}
+
+class GetActivities extends TransactionState {
   const GetActivities({this.listActivities});
   final List<Activity> listActivities;
 
@@ -59,6 +66,37 @@ class GetActivities extends TransactionState{
   }
 
   @override
+  String toString() => 'List Activities { posts: ${listActivities.toString()}}';
+}
+
+class GetAccounts extends TransactionState {
+  const GetAccounts({this.listAccounts});
+  final List<Account> listAccounts;
+
+  @override
+  List<Object> get props {
+    return [listAccounts];
+  }
+
+  @override
+  String toString() => 'List Accounts { posts: ${listAccounts.toString()}}';
+}
+
+class GetAuxiliaries extends TransactionState {
+  const GetAuxiliaries({this.listAuxiliaries});
+  final List<Auxiliary> listAuxiliaries;
+
+  @override
+  List<Object> get props {
+    return [listAuxiliaries];
+  }
+
+  @override
   String toString() =>
-      'List Books { posts: ${listActivities.toString()}}';
+      'List Auxiliaries { posts: ${listAuxiliaries.toString()}}';
+}
+
+class ChangedCancelState extends TransactionState {
+  final bool cancel;
+  ChangedCancelState({this.cancel});
 }

@@ -13,20 +13,10 @@ class VoucherScreen extends StatefulWidget {
 }
 
 class _VoucherScreenState extends State<VoucherScreen> {
-  TextEditingController _searchQueryController = TextEditingController();
-  bool _isSearching = false;
-  String searchQuery = "Search query";
-  bool filter;
-  @override
-  void initState() {
-    super.initState();
-    filter = false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerOcobo(),
+      drawer: DrawerOcobo(selected: 2,),
       appBar: AppbarSearch(
         title: 'Comprobantes',
       ),

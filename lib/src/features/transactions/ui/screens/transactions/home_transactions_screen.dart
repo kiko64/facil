@@ -20,7 +20,7 @@ class _TransaccionScreenState extends State<TransaccionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: DrawerOcobo(),
+        drawer: DrawerOcobo(selected: 1,),
         appBar: AppbarSearch(title: 'Transacciones',),
         body: ListTransactionScreen(),
         floatingActionButton: FloatingActionButton(

@@ -23,5 +23,5 @@ class GetAllVouchers extends VoucherState {
 
   @override
   String toString() =>
-      'List Books { posts: ${listVouchers.toString()}, offset: $offset, loadingData: $loadingData}';
+      'List Vouchers { posts: ${listVouchers.toString()}, offset: $offset, loadingData: $loadingData}';
 }

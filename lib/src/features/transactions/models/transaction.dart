@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+const String alias = 't.';
 
 class Transaction {
   final int id;
@@ -8,7 +8,7 @@ class Transaction {
   final String date;
   final int docAuxiliary;
   final String auxiliary;
-  final String value;
+  final double value;
   final String account;
   final String observation;
   final List images;
@@ -36,7 +36,7 @@ class Transaction {
         date: map['fecha'],
         docAuxiliary: map['documento'],
         auxiliary: map['nombre'],
-        value: NumberFormat.simpleCurrency().format(double.parse(map['valor'])),
+        value: double.parse(map['valor']),
         account: map['cuenta'],
         observation: map['observacion'],
         images: [
@@ -47,15 +47,4 @@ class Transaction {
         ],
         vouchers: map['registro']);
   }
-
-  // Map<String, dynamic> toMap() {
-  //   return <String, dynamic>{
-  //     'id': id,
-  //     'name': name,
-  //     'numberOfPages': numberOfPages,
-  //     'price': price,
-  //     'publicationDate': publicationDate,
-  //     'status': status
-  //   };
-  // }
 }

@@ -5,7 +5,7 @@ import 'package:facilapp/src/features/transactions/ui/widgets/transaction_widget
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:facilapp/src/router/router_path.dart' as routes;
 
 class ListTransactionScreen extends StatelessWidget {
   @override
@@ -62,7 +62,8 @@ class ListTransactionScreenState extends State<_ListTransactionScreen> {
           if (state is GetAllTransactions) {
             offset = state.offset;
             loadingData = state.loadingData;
-            _listTransaction = state.listTransactions;
+            _listTransaction.addAll(state.listTransactions);
+            
           }
           return Column(
             children: [
@@ -72,7 +73,7 @@ class ListTransactionScreenState extends State<_ListTransactionScreen> {
                 ],
               ),
               Expanded(
-                child: ListView.builder(
+                child: _listTransaction.length != 0 ? ListView.builder(
                   controller: _scrollController,
                   itemCount: _listTransaction.length,
                   itemBuilder: (context, index) {
@@ -86,9 +87,16 @@ class ListTransactionScreenState extends State<_ListTransactionScreen> {
                     }
                     return TransactionWidgetScreen(
                       transaction: _listTransaction[index],
+                      onTap: (transaction) {
+                        if (transaction.status == 12601) {
+                          Navigator.pushNamed(
+                              context, routes.RegisterTransactionPageRoute,
+                              arguments: transaction);
+                        }
+                      },
                     );
                   },
-                ),
+                ) : Center(child: Text('No se encontrarón resultados'),),
               )
             ],
           );

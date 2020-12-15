@@ -8,3 +8,4 @@ const String MovementsPageRoute = 'movements';
 const String RegisterUserPageRoute = 'registerUser';
 const String ForgetPasswordPageRoute = 'forgetPassword';
 const String RegisterTransactionPageRoute = 'registerTransaction';
+const String Microfono = 'microfono';

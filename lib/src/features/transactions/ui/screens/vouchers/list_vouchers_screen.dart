@@ -77,7 +77,7 @@ class _ListVoucherState extends State<ListVoucher> {
               ],
             ),
             Expanded(
-              child: ListView.builder(
+              child: _listVoucher.length != 0 ? ListView.builder(
                 controller: _scrollController,
                 itemCount: _listVoucher.length,
                 itemBuilder: (context, index) {
@@ -92,7 +92,7 @@ class _ListVoucherState extends State<ListVoucher> {
                     voucher: _listVoucher[index],
                   );
                 },
-              ),
+              ) : Center(child: Text('No se encontrarón resultados'),),
             )
           ],
         );

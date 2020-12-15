@@ -8,9 +8,9 @@ const URL_BASE =
 
 class VoucherRepository {
   Future<List<dynamic>> getAllVoucher(
-      {String registros, int offset, int limit}) async {
+      {String registros, int offset, int limit, String query}) async {
     var url = URL_BASE +
-        '?offset=$offset&limit=$limit${registros != null ? '&registro=$registros' : ''}';
+        '?sort=registro.desc&offset=$offset&limit=$limit${registros != null ? '&registro=$registros' : ''}${query != null ? '&search=$query':''}';
     var response = await http.get(url);
     Map<String, dynamic> responseData = json.decode(response.body);
     List voucherJson = responseData["data"].toList();

@@ -73,14 +73,14 @@ class _MovementListScreenState extends State<MovementListScreen> {
                 ),
               ],
             ),
-            body: ListView.builder(
+            body: _listMovements.length != 0 ? ListView.builder(
               itemCount: _listMovements.length,
               itemBuilder: (context, index) {
                 return MovementWidget(
                   movement: _listMovements[index],
                 );
               },
-            ));
+            ): Center(child: Text('No se encontrarón resultados'),));
       },
     );
   }
