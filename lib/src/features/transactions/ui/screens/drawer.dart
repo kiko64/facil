@@ -19,7 +19,6 @@ class DrawerOcobo extends StatelessWidget {
           var _cubit = BlocProvider.of<UserCubit>(context);
           if (state is ChangedOptionDrawer) {
             option = state.option;
-            print(state.option);
           }
           return Drawer(
             child: ListView(

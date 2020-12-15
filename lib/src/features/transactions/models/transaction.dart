@@ -10,6 +10,7 @@ class Transaction {
   final String auxiliary;
   final double value;
   final String account;
+  final String desAccount;
   final String observation;
   final List images;
   final String vouchers;
@@ -24,6 +25,7 @@ class Transaction {
       this.auxiliary,
       this.value,
       this.account,
+      this.desAccount,
       this.observation,
       this.images,
       this.vouchers});
@@ -38,6 +40,7 @@ class Transaction {
         auxiliary: map['nombre'],
         value: double.parse(map['valor']),
         account: map['cuenta'],
+        desAccount: map['desCuenta'],
         observation: map['observacion'],
         images: [
           map['archivo0'],

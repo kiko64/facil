@@ -18,7 +18,7 @@ class TransactionRepository {
       {final name, int limit, int offset}) async {
     var status = globals.selected;
     var url = URL_BASE +
-        '${status != 12600 ? '?seguimiento=$status&' : '?'}offset=$offset&limit=$limit&sort=ejecutar.desc';
+        '${status != 12600 ? '?seguimiento=$status&' : '?'}offset=$offset&limit=$limit';
     var response = await http.get(url);
     Map<String, dynamic> responseData = json.decode(response.body);
     List transactionJson = responseData["data"].toList();

@@ -44,7 +44,10 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
   final TextEditingController _search = TextEditingController();
   final TextEditingController _value = TextEditingController();
   final TextEditingController _observation = TextEditingController();
+  final TextEditingController _date = TextEditingController();
   final _formRegisterTransaction = GlobalKey<FormState>();
+  var _status = 1;
+  bool _actions;
   String _activity;
   String _account;
   String _auxiliary;
@@ -89,6 +92,8 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
     _transaction = widget.transaction;
     _speech = stt.SpeechToText();
     if (_transaction != null) {
+      _status = _transaction.status;
+      _date.text = _transaction.date;
       _value.text = _transaction.value.toString();
       _observation.text = _transaction.observation;
       _activity = _transaction.idActivity.toString();
@@ -126,6 +131,11 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
 
   @override
   Widget build(BuildContext context) {
+    if (_status == 12601 || _status == 1) {
+      _actions = true;
+    } else {
+      _actions = false;
+    }
     var screenSize = MediaQuery.of(context).size;
     return BlocBuilder<TransactionCubit, TransactionState>(
       builder: (context, state) {
@@ -204,16 +214,28 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextFormField(
-                      controller: _search,
-                      decoration: InputDecoration(
-                          hintText: 'Actividad,valor,auxiliar',
-                          hintStyle: TextStyle(color: Colors.grey.shade500),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          )),
-                    ),
+                    _actions
+                        ? TextFormField(
+                            controller: _search,
+                            decoration: InputDecoration(
+                                hintText: 'Actividad,valor,auxiliar',
+                                hintStyle:
+                                    TextStyle(color: Colors.grey.shade500),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.black,
+                                )),
+                          )
+                        : TextFormField(
+                            controller: _date,
+                            enabled: false,
+                            decoration: InputDecoration(
+                                labelText: 'Fecha',
+                                prefixIcon: Icon(
+                                  Icons.schedule_outlined,
+                                  color: Colors.black,
+                                )),
+                          ),
                     DropdownButtonFormField(
                       isExpanded: true,
                       decoration: InputDecoration(
@@ -222,13 +244,17 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                       ),
                       items: _listActivity,
                       value: _activity,
-                      onChanged: (value) {
-                        setState(() {
-                          _activity = value;
-                        });
-                        _auxiliary = null;
-                        loadingAuxiliaries();
-                      },
+                      disabledHint:
+                          _actions ? null : Text(_transaction.activity),
+                      onChanged: _actions
+                          ? (value) {
+                              setState(() {
+                                _activity = value;
+                              });
+                              _auxiliary = null;
+                              loadingAuxiliaries();
+                            }
+                          : null,
                       validator: (value) {
                         if (value == null) {
                           return 'Seleccione una actividad';
@@ -237,6 +263,7 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                       },
                     ),
                     TextFormField(
+                      enabled: _actions,
                       keyboardType: TextInputType.number,
                       controller: _value,
                       decoration: InputDecoration(
@@ -259,11 +286,15 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                               Icon(Icons.perm_identity, color: Colors.black)),
                       items: _listAuxiliary,
                       value: _auxiliary,
-                      onChanged: (value) {
-                        setState(() {
-                          _auxiliary = value;
-                        });
-                      },
+                      disabledHint:
+                          _actions ? null : Text(_transaction.auxiliary),
+                      onChanged: _actions
+                          ? (value) {
+                              setState(() {
+                                _auxiliary = value;
+                              });
+                            }
+                          : null,
                       validator: (value) {
                         if (value == null) {
                           return 'Seleccione un auxiliar';
@@ -280,11 +311,20 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                       ),
                       items: _listAccount,
                       value: _account,
-                      onChanged: (value) {
-                        setState(() {
-                          _account = value;
-                        });
-                      },
+                      disabledHint:
+                          _actions ? null : Text(_transaction.desAccount),
+                      onChanged: _actions
+                          ? (value) {
+                              setState(() {
+                                _account = value;
+                              });
+                            }
+                          : null,
+                      // onChanged:(value) {
+                      //   setState(() {
+                      //     _account = value;
+                      //   });
+                      // },
                       validator: (value) {
                         if (value == null) {
                           return 'Seleccione una cuenta';
@@ -293,6 +333,7 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                       },
                     ),
                     TextFormField(
+                      enabled: _actions,
                       controller: _observation,
                       decoration: InputDecoration(
                         labelText: 'Observación',
@@ -309,13 +350,14 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                             elevation: 10,
                             child: Container(
                                 width: screenSize.width,
-                                height: screenSize.width * 0.5,
+                                height: screenSize.width * 0.6,
                                 child: CarouselSlider(
                                   options: CarouselOptions(),
                                   items: _images
                                       .map((item) => Container(
                                             decoration: _image != null ||
-                                                    _transaction != null
+                                                    _transaction != null &&
+                                                        item != null
                                                 ? BoxDecoration(
                                                     image: DecorationImage(
                                                         fit: BoxFit.contain,
@@ -377,85 +419,87 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
               ),
             ),
           ),
-          floatingActionButton: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AvatarGlow(
-                animate: _isListening,
-                glowColor: Theme.of(context).primaryColor,
-                endRadius: 40.0,
-                duration: const Duration(milliseconds: 2000),
-                repeatPauseDuration: const Duration(milliseconds: 100),
-                repeat: true,
-                child: FloatingActionButton(
-                  heroTag: 1,
-                  child: Icon(_isListening ? Icons.mic : Icons.mic_none),
-                  onPressed: _listen,
-                ),
-              ),
-              // SizedBox(
-              //   width: 10,
-              // ),
-              FloatingActionButton(
-                heroTag: 2,
-                child: Icon(Icons.save_outlined),
-                onPressed: () async {
-                  if (!_formRegisterTransaction.currentState.validate() ||
-                      _images.length == 0) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        content: Text(
-                          'Debe completar todos los campos requeridos y cargar al menos un soporte',
-                          textAlign: TextAlign.center,
-                        ),
-                        actions: [
-                          IconButton(
-                            icon: Icon(
-                              Icons.check,
-                              color: OcoboColors.primaryColor,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
+          floatingActionButton: _actions
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AvatarGlow(
+                      animate: _isListening,
+                      glowColor: Theme.of(context).primaryColor,
+                      endRadius: 40.0,
+                      duration: const Duration(milliseconds: 2000),
+                      repeatPauseDuration: const Duration(milliseconds: 100),
+                      repeat: true,
+                      child: FloatingActionButton(
+                        heroTag: 1,
+                        child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+                        onPressed: _listen,
                       ),
-                    );
-                    return;
-                  }
-                  // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
-                  if (widget.transaction != null) {
-                    _transactionCubit.updateTransaction(
-                        transaction: Transaction(
-                            id: widget.transaction.id,
-                            idActivity: int.parse(_activity),
-                            value: double.parse(
-                              _value.text,
+                    ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
+                    FloatingActionButton(
+                      heroTag: 2,
+                      child: Icon(Icons.save_outlined),
+                      onPressed: () async {
+                        if (!_formRegisterTransaction.currentState.validate() ||
+                            _images.length == 0) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content: Text(
+                                'Debe completar todos los campos requeridos y cargar al menos un soporte',
+                                textAlign: TextAlign.center,
+                              ),
+                              actions: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.check,
+                                    color: OcoboColors.primaryColor,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                )
+                              ],
                             ),
-                            docAuxiliary: int.parse(_auxiliary),
-                            account: _account,
-                            observation: _observation.text));
-                  } else {
-                    var now = DateTime.now();
-                    BlocProvider.of<TransactionCubit>(context)
-                        .registerTransaction(
-                            transaction: Transaction(
-                                date: DateFormat('yyyy-MM-dd hh:mm')
-                                    .format(now)
-                                    .toString(),
-                                status: 12601,
-                                idActivity: int.parse(_activity),
-                                docAuxiliary: int.parse(_auxiliary),
-                                account: _account,
-                                value: double.parse(_value.text),
-                                images: _images,
-                                observation: _observation.text));
-                  }
-                },
-              ),
-            ],
-          ),
+                          );
+                          return;
+                        }
+                        // Aquí el formulario ya está validado. Haz lo que tengas que hacer (;
+                        if (widget.transaction != null) {
+                          _transactionCubit.updateTransaction(
+                              transaction: Transaction(
+                                  id: widget.transaction.id,
+                                  idActivity: int.parse(_activity),
+                                  value: double.parse(
+                                    _value.text,
+                                  ),
+                                  docAuxiliary: int.parse(_auxiliary),
+                                  account: _account,
+                                  observation: _observation.text));
+                        } else {
+                          var now = DateTime.now();
+                          BlocProvider.of<TransactionCubit>(context)
+                              .registerTransaction(
+                                  transaction: Transaction(
+                                      date: DateFormat('yyyy-MM-dd hh:mm')
+                                          .format(now)
+                                          .toString(),
+                                      status: 12601,
+                                      idActivity: int.parse(_activity),
+                                      docAuxiliary: int.parse(_auxiliary),
+                                      account: _account,
+                                      value: double.parse(_value.text),
+                                      images: _images,
+                                      observation: _observation.text));
+                        }
+                      },
+                    ),
+                  ],
+                )
+              : null,
         );
       },
     );

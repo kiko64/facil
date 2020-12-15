@@ -63,7 +63,6 @@ class ListTransactionScreenState extends State<_ListTransactionScreen> {
             offset = state.offset;
             loadingData = state.loadingData;
             _listTransaction.addAll(state.listTransactions);
-            
           }
           return Column(
             children: [
@@ -73,30 +72,32 @@ class ListTransactionScreenState extends State<_ListTransactionScreen> {
                 ],
               ),
               Expanded(
-                child: _listTransaction.length != 0 ? ListView.builder(
-                  controller: _scrollController,
-                  itemCount: _listTransaction.length,
-                  itemBuilder: (context, index) {
-                    //Revisar posible error
-                    if (loadingData) {
-                      if (index == _listTransaction.length - 1) {
-                        return Center(
-                            heightFactor: 1.5,
-                            child: CircularProgressIndicator());
-                      }
-                    }
-                    return TransactionWidgetScreen(
-                      transaction: _listTransaction[index],
-                      onTap: (transaction) {
-                        if (transaction.status == 12601) {
-                          Navigator.pushNamed(
-                              context, routes.RegisterTransactionPageRoute,
-                              arguments: transaction);
-                        }
-                      },
-                    );
-                  },
-                ) : Center(child: Text('No se encontrarón resultados'),),
+                child: _listTransaction.length != 0
+                    ? ListView.builder(
+                        controller: _scrollController,
+                        itemCount: _listTransaction.length,
+                        itemBuilder: (context, index) {
+                          //Revisar posible error
+                          if (loadingData) {
+                            if (index == _listTransaction.length - 1) {
+                              return Center(
+                                  heightFactor: 1.5,
+                                  child: CircularProgressIndicator());
+                            }
+                          }
+                          return TransactionWidgetScreen(
+                            transaction: _listTransaction[index],
+                            onTap: (transaction) {
+                              Navigator.pushNamed(
+                                  context, routes.RegisterTransactionPageRoute,
+                                  arguments: transaction);
+                            },
+                          );
+                        },
+                      )
+                    : Center(
+                        child: Text('No se encontrarón resultados'),
+                      ),
               )
             ],
           );
