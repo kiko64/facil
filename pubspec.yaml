@@ -46,6 +46,7 @@ dependencies:
   dio: ^3.0.10
   speech_to_text: ^3.0.1
   avatar_glow: ^1.2.0
+  change_app_package_name: ^0.1.2
 
   # camera:
   # path_provider:
