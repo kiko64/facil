@@ -7,14 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListVoucherScreen extends StatelessWidget {
   final String registros;
-
-  const ListVoucherScreen({Key key, this.registros}) : super(key: key);
+  final String search;
+  const ListVoucherScreen({Key key, this.registros, this.search}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => VoucherCubit(),
       child: ListVoucher(
         registros: registros,
+        search: search,
       ),
     );
   }
@@ -22,8 +23,8 @@ class ListVoucherScreen extends StatelessWidget {
 
 class ListVoucher extends StatefulWidget {
   final String registros;
-
-  const ListVoucher({Key key, this.registros}) : super(key: key);
+  final String search;
+  const ListVoucher({Key key, this.registros, this.search}) : super(key: key);
   @override
   _ListVoucherState createState() => _ListVoucherState();
 }
@@ -43,7 +44,7 @@ class _ListVoucherState extends State<ListVoucher> {
     _listVoucher = [];
     _voucherCubit = BlocProvider.of<VoucherCubit>(context);
     _voucherCubit.loading();
-    _voucherCubit.getAll(registros: registros, offset: offset);
+    _voucherCubit.getAll(registros: registros, offset: offset, query: widget.search);
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
               _scrollController.position.maxScrollExtent &&
@@ -77,22 +78,26 @@ class _ListVoucherState extends State<ListVoucher> {
               ],
             ),
             Expanded(
-              child: _listVoucher.length != 0 ? ListView.builder(
-                controller: _scrollController,
-                itemCount: _listVoucher.length,
-                itemBuilder: (context, index) {
-                  if (loadingData) {
-                    if (index == _listVoucher.length - 1) {
-                      return Center(
-                          heightFactor: 1.5,
-                          child: CircularProgressIndicator());
-                    }
-                  }
-                  return VoucherWidget(
-                    voucher: _listVoucher[index],
-                  );
-                },
-              ) : Center(child: Text('No se encontrarón resultados'),),
+              child: _listVoucher.length != 0
+                  ? ListView.builder(
+                      controller: _scrollController,
+                      itemCount: _listVoucher.length,
+                      itemBuilder: (context, index) {
+                        if (loadingData) {
+                          if (index == _listVoucher.length - 1) {
+                            return Center(
+                                heightFactor: 1.5,
+                                child: CircularProgressIndicator());
+                          }
+                        }
+                        return VoucherWidget(
+                          voucher: _listVoucher[index],
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text('No se encontrarón resultados'),
+                    ),
             )
           ],
         );

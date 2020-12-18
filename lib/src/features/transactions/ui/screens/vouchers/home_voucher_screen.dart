@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 
 class VoucherScreen extends StatefulWidget {
   final vouchers;
-
-  const VoucherScreen({Key key, this.vouchers}) : super(key: key);
+  final search;
+  const VoucherScreen({
+    Key key,
+    this.vouchers,
+    this.search
+  }) : super(key: key);
 
   @override
   _VoucherScreenState createState() => _VoucherScreenState();
@@ -16,12 +20,15 @@ class _VoucherScreenState extends State<VoucherScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerOcobo(selected: 2,),
+      drawer: DrawerOcobo(
+        selected: 2,
+      ),
       appBar: AppbarSearch(
         title: 'Comprobantes',
       ),
       body: ListVoucherScreen(
         registros: widget.vouchers,
+        search: "h",
       ),
     );
   }

@@ -46,10 +46,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.HomeTransactionsPageRoute:
       return MaterialPageRoute(builder: (context) => TransaccionScreen());
     case routes.HomeVochersPageRoute:
-      final argument = settings.arguments;
+      final vouchers = (settings.arguments as Map)['vouchers'];
+      final search = (settings.arguments as Map)['search'];
       return MaterialPageRoute(
           builder: (context) => VoucherScreen(
-                vouchers: argument,
+                vouchers: vouchers,
+                search: search,
               ));
     case routes.MovementsPageRoute:
       final argument = settings.arguments;

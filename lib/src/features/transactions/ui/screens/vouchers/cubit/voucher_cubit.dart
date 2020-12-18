@@ -14,13 +14,13 @@ class VoucherCubit extends Cubit<VoucherState> {
   }
 
   void getAll({registros, offset, query}) async {
+    print(query);
     // emit(VoucherLoading());
     List<dynamic> response = await _voucherRepository.getAllVoucher(
         registros: registros, offset: offset, limit: limit, query: query);
     List<Voucher> _vouchers = response[0];
     int total = response[1];
-    bool loadingData = _vouchers.length == 0 &&
-            _vouchers.length < limit ||
+    bool loadingData = _vouchers.length == 0 && _vouchers.length < limit ||
             _vouchers.length == total
         ? false
         : true;

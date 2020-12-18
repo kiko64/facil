@@ -16,20 +16,29 @@ class _AppbarSearchState extends State<AppbarSearch> {
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
+  var _transactionCubit;
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      leading: _isSearching ? const BackButton() : null,
-      title: _isSearching
-          ? _buildSearchField()
-          :
-          // title:
-          Text(
-              widget.title,
-            ),
-      actions: _buildActions(),
+    return BlocProvider(
+      create: (context) => VoucherCubit(),
+      child: BlocBuilder<VoucherCubit, VoucherState>(
+        builder: (context, state) {
+          _transactionCubit = BlocProvider.of<VoucherCubit>(context);
+          return AppBar(
+            centerTitle: true,
+            leading: _isSearching ? const BackButton() : null,
+            title: _isSearching
+                ? _buildSearchField()
+                :
+                // title:
+                Text(
+                    widget.title,
+                  ),
+            actions: _buildActions(),
+          );
+        },
+      ),
     );
   }
 
@@ -90,13 +99,11 @@ class _AppbarSearchState extends State<AppbarSearch> {
     });
   }
 
-  void updateSearchQuery(String newQuery) {
-    print('object');
+  void updateSearchQuery(String newQuery) async{
     SnackBar(content: Text(_searchQueryController.text));
-    BlocProvider.of<VoucherCubit>(context)
-        .getAll(query: _searchQueryController.text);
+    // await _transactionCubit.getAll(query: _searchQueryController.text, offset: 1);
     Future.delayed(Duration.zero, () {
-      Navigator.pushNamed(context, routes.HomeVochersPageRoute);
+      Navigator.pushNamed(context, routes.HomeVochersPageRoute, arguments: {'search': _searchQueryController.text});
     });
     setState(() {
       searchQuery = newQuery;

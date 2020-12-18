@@ -350,7 +350,7 @@ class _RegisterTransactionState extends State<RegisterTransaction> {
                             elevation: 10,
                             child: Container(
                                 width: screenSize.width,
-                                height: screenSize.width * 0.6,
+                                height: screenSize.width * 0.5,
                                 child: CarouselSlider(
                                   options: CarouselOptions(),
                                   items: _images

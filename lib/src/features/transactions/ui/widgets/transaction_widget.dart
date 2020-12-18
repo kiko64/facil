@@ -153,7 +153,7 @@ class TransactionWidgetScreen extends StatelessWidget {
             onTap: status == 12604
                 ? () {
                     Navigator.pushNamed(context, routes.HomeVochersPageRoute,
-                        arguments: transaction.vouchers);
+                        arguments: {'vouchers': transaction.vouchers});
                   }
                 : null,
           );

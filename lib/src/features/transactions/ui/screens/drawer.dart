@@ -69,7 +69,7 @@ class DrawerOcobo extends StatelessWidget {
                   title: Text('Comprobantes'),
                   onTap: () {
                     _cubit.changeOptionDrawer(option: 2);
-                    Navigator.pushNamed(context, routes.HomeVochersPageRoute);
+                    Navigator.pushNamed(context, routes.HomeVochersPageRoute,arguments: {'vouchers': null});
                   },
                 ),
                 ListTile(
